@@ -14,6 +14,7 @@ const NotesList = props => {
         key={note.id}
         note={note}
         onDeleteClick={() => props.onDeleteClick(note.id)}
+        onEditSave={props.onEditSave}
       />
     ));
 

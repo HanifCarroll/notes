@@ -24,18 +24,30 @@ class App extends Component {
   onContentChange = e => this.setState({ content: e.target.value });
 
   onNewSave = newNote => {
-    this.setState({
-      notes: [
-        ...this.state.notes,
-        {
-          title: this.state.title,
-          content: this.state.content,
-          id: short.uuid()
-        }
-      ],
-      title: "",
-      content: ""
-    });
+    if (this.state.content) {
+      this.setState({
+        notes: [
+          ...this.state.notes,
+          {
+            title: this.state.title,
+            content: this.state.content,
+            id: short.uuid()
+          }
+        ],
+        title: "",
+        content: ""
+      });
+    }
+  };
+
+  onEditSave = note => {
+    const notes = this.state.notes;
+    const oldNote = notes.find(old => old.id === note.id);
+
+    oldNote.title = note.title;
+    oldNote.content = note.content;
+
+    this.setState({ notes });
   };
 
   deleteNote = noteId => {
@@ -57,7 +69,11 @@ class App extends Component {
             onContentChange={this.onContentChange}
             onNewSave={this.onNewSave}
           />
-          <NotesList notes={notes} onDeleteClick={this.deleteNote} />
+          <NotesList
+            notes={notes}
+            onDeleteClick={this.deleteNote}
+            onEditSave={this.onEditSave}
+          />
         </MainDiv>
       </div>
     );
