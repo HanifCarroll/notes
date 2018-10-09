@@ -11,7 +11,10 @@ const MainDiv = styled.div`
 
 class App extends Component {
   state = {
-    notes: [],
+    notes: [
+      { id: 1, title: "Test 1", content: "Test 1 content" },
+      { id: 2, title: "Test 2", content: "Test 2 content" }
+    ],
     title: "",
     content: ""
   };
@@ -35,7 +38,7 @@ class App extends Component {
     });
   };
 
-  removeNote = noteId => {
+  deleteNote = noteId => {
     this.setState({
       notes: this.state.notes.filter(note => note.id !== noteId)
     });
@@ -54,7 +57,7 @@ class App extends Component {
             onContentChange={this.onContentChange}
             onNewSave={this.onNewSave}
           />
-          <NotesList notes={notes} />
+          <NotesList notes={notes} onDeleteClick={this.deleteNote} />
         </MainDiv>
       </div>
     );
