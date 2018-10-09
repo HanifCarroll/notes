@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import short from "short-uuid";
 
+import Header from "./components/Header";
+import NotesList from "./components/NotesList";
+
 const MainDiv = styled.div`
   color: red;
 `;
@@ -44,7 +47,14 @@ class App extends Component {
     return (
       <div className="App">
         <MainDiv>
-          <h1>Placeholder</h1>
+          <Header
+            title={title}
+            content={content}
+            onTitleChange={this.onTitleChange}
+            onContentChange={this.onContentChange}
+            onNewSave={this.onNewSave}
+          />
+          <NotesList notes={notes} />
         </MainDiv>
       </div>
     );
