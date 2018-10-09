@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-
-import Title from "./components/Title";
-import Editor from "./components/Editor";
-import Sidebar from "./components/Sidebar";
+import short from "short-uuid";
 
 const MainDiv = styled.div`
   color: red;
@@ -20,29 +17,34 @@ class App extends Component {
 
   onContentChange = e => this.setState({ content: e.target.value });
 
-  onSaveClick = e =>
+  onNewSave = newNote => {
     this.setState({
       notes: [
         ...this.state.notes,
-        { title: this.state.title, content: this.state.content }
+        {
+          title: this.state.title,
+          content: this.state.content,
+          id: short.uuid()
+        }
       ],
       title: "",
       content: ""
     });
+  };
+
+  removeNote = noteId => {
+    this.setState({
+      notes: this.state.notes.filter(note => note.id !== noteId)
+    });
+  };
 
   render() {
     const { title, content, notes } = this.state;
 
     return (
       <div className="App">
-        <Sidebar notes={notes} />
         <MainDiv>
-          <Title onTitleChange={this.onTitleChange} title={title} />
-          <Editor
-            onContentChange={this.onContentChange}
-            onSaveClick={this.onSaveClick}
-            content={content}
-          />
+          <h1>Placeholder</h1>
         </MainDiv>
       </div>
     );
