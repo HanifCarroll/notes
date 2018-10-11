@@ -5,9 +5,7 @@ import short from "short-uuid";
 import Header from "./components/Header";
 import NotesList from "./components/NotesList";
 
-const MainDiv = styled.div`
-  color: red;
-`;
+const MainDiv = styled.div``;
 
 class App extends Component {
   state = {

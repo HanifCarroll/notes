@@ -3,10 +3,11 @@ import styled from "styled-components";
 
 const StyledContainer = styled.div`
   box-sizing: border-box;
-  width: 20%;
-  height: 200px;
+  min-height: 60px;
+  max-height: 400px;
   border: 2px solid black;
   overflow-y: auto;
+  margin: 0 10px 20px 10px;
   padding: 0 2%;
 `;
 
