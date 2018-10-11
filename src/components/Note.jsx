@@ -21,6 +21,10 @@ const EditTitleInput = styled.input``;
 
 const EditTextArea = styled.textarea``;
 
+const NoteContent = styled.p`
+  white-space: pre-line;
+`;
+
 class Note extends React.Component {
   state = {
     edit: false,
@@ -74,7 +78,7 @@ class Note extends React.Component {
         />
       );
     }
-    return <p>{this.props.note.content}</p>;
+    return <NoteContent>{this.props.note.content}</NoteContent>;
   };
 
   renderEditButton = () => {
