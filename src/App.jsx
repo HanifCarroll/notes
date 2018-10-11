@@ -11,7 +11,9 @@ class App extends Component {
   state = {
     notes: [
       { id: 1, title: "Test 1", content: "Test 1 content" },
-      { id: 2, title: "Test 2", content: "Test 2 content" }
+      { id: 2, title: "Test 2", content: "Test 2 content" },
+      { id: 3, title: "Test 3", content: "Test 3 content" },
+      { id: 4, title: "Test 4", content: "Test 4 content" }
     ],
     title: "",
     content: ""
@@ -22,7 +24,7 @@ class App extends Component {
   onContentChange = e => this.setState({ content: e.target.value });
 
   onNewSave = newNote => {
-    if (this.state.content) {
+    if (this.state.title || this.state.content) {
       this.setState({
         notes: [
           ...this.state.notes,

@@ -6,9 +6,7 @@ import "./NotesList.css";
 import Note from "./Note";
 
 const NotesContainer = styled.div`
-  // display: flex;
-  // flex-wrap: wrap;
-  // align-items: flex-start;
+  margin: 0 10%;
 `;
 
 const NotesList = props => {
@@ -23,7 +21,7 @@ const NotesList = props => {
     ));
 
   return (
-    <div>
+    <NotesContainer>
       <h1>Notes List</h1>
       <Masonry
         breakpointCols={4}
@@ -32,8 +30,7 @@ const NotesList = props => {
       >
         {renderNotesList()}
       </Masonry>
-      {/* <NotesContainer>{renderNotesList()}</NotesContainer> */}
-    </div>
+    </NotesContainer>
   );
 };
 
