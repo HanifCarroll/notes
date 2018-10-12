@@ -63,10 +63,11 @@ class App extends Component {
   };
 
   saveNoteClickHandler = e => {
+    const { newNote, title, content } = this.state;
     const { type } = e.target;
-    console.log(type);
 
-    if (this.state.newNote) {
+    if (newNote) {
+      if (!title.length && !content.length) this.setState({ newNote: false });
       // When creating a new note, if we click from one input to another, don't save.
       if (type === "text" || type === "textarea") return;
 

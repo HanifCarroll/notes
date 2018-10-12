@@ -39,11 +39,13 @@ const Header = props => {
         style={inputStyle}
         value={title}
         onChange={e => onTitleChange(e)}
+        placeholder="Title"
       />
       <ContentInput
         value={content}
         onChange={e => onContentChange(e)}
         onClick={onNewNote}
+        placeholder="Write a note..."
       />
 
       <SaveButton onClick={onNewSave}>Save</SaveButton>
