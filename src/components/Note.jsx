@@ -25,10 +25,6 @@ const EditTitleInput = styled.input`
   max-width: 80%;
 `;
 
-const EditTextArea = styled.textarea`
-  max-width: 80%;
-`;
-
 const NoteContentContainer = styled.div`
   overflow-y: auto;
   box-sizing: border-box;

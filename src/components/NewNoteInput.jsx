@@ -12,7 +12,7 @@ const ContentInputStyle = {
   width: "60%",
   margin: "0 auto",
   fontSize: "16px",
-  padding: "5px",
+  padding: "10px",
   height: "auto"
 };
 
@@ -35,7 +35,7 @@ const NewNoteInput = props => {
     width: "60%",
     margin: "0 auto",
     fontSize: "18px",
-    padding: "5px"
+    padding: "10px"
   };
 
   return (

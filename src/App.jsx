@@ -164,7 +164,6 @@ class App extends Component {
         <MainDiv>
           <Header
             search={search}
-            onSearch={this.onSearchNotes}
             onSearchChange={this.onSearchChange}
             onEnterPress={this.onEnterPress}
           />

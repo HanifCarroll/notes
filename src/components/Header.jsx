@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledHeader = styled.header`
+  background-color: #b3ccff;
   padding: 1%;
   display: flex;
   justify-content: center;
@@ -9,21 +10,19 @@ const StyledHeader = styled.header`
 
 const StyledLogo = styled.h1`
   text-align: right;
-  width: 25%;
+  width: 20%;
+  margin-left: 5%;
 `;
 
 const SearchInput = styled.input`
-  margin: auto 5%;
-  width: 55%;
-  font-size: 20px;
-`;
-
-const SearchButton = styled.button`
-  width: 20%;
+  margin: auto 15% auto 5%;
+  width: 80%;
+  font-size: 16px;
+  padding: 7px;
 `;
 
 const Header = props => {
-  const { search, onSearch, onSearchChange, onEnterPress } = props;
+  const { search, onSearchChange, onEnterPress } = props;
   return (
     <StyledHeader>
       <StyledLogo>Notes</StyledLogo>
@@ -34,7 +33,6 @@ const Header = props => {
         onChange={e => onSearchChange(e)}
         onKeyDown={e => onEnterPress(e)}
       />
-      <SearchButton onClick={() => onSearch(search)}>Search</SearchButton>
     </StyledHeader>
   );
 };
