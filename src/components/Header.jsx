@@ -2,30 +2,39 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledHeader = styled.header`
-  display: grid;
-  grid-template-columns: 0.5fr 1.5fr;
-  grid-template-rows: 1fr;
-  grid-gap: 30px;
-  grid-template-areas: ". .";
-  height: 100%;
-  border: 2px solid black;
   padding: 1%;
+  display: flex;
+  justify-content: center;
 `;
 
 const StyledLogo = styled.h1`
   text-align: right;
+  width: 25%;
 `;
 
 const SearchInput = styled.input`
-  margin: auto 0;
-  width: 80%;
+  margin: auto 5%;
+  width: 55%;
+  font-size: 20px;
 `;
 
-const Header = () => {
+const SearchButton = styled.button`
+  width: 20%;
+`;
+
+const Header = props => {
+  const { search, onSearch, onSearchChange, onEnterPress } = props;
   return (
     <StyledHeader>
       <StyledLogo>Notes</StyledLogo>
-      <SearchInput type="text" placeholder="Search notes..." />
+      <SearchInput
+        type="search"
+        placeholder="Search notes..."
+        value={search}
+        onChange={e => onSearchChange(e)}
+        onKeyDown={e => onEnterPress(e)}
+      />
+      <SearchButton onClick={() => onSearch(search)}>Search</SearchButton>
     </StyledHeader>
   );
 };

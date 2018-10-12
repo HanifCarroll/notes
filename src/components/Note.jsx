@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import TextareaAutosize from "react-autosize-textarea";
 
 const StyledContainer = styled.div`
   box-sizing: border-box;
@@ -43,6 +44,10 @@ const NoteContent = styled.p`
 const NoteTitle = styled.h3`
   margin-bottom: 15px;
 `;
+
+const EditTextAreaStyle = {
+  maxWidth: "80%"
+};
 
 class Note extends React.Component {
   constructor(props) {
@@ -96,7 +101,8 @@ class Note extends React.Component {
   renderNoteContent = () => {
     if (this.state.edit) {
       return (
-        <EditTextArea
+        <TextareaAutosize
+          style={EditTextAreaStyle}
           onChange={e =>
             this.setState(this.onInputChange("content", e.target.value))
           }

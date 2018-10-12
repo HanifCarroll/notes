@@ -1,16 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import TextareaAutosize from "react-autosize-textarea";
 
 const HeaderContainer = styled.div`
   margin: 2% 10%;
   text-align: center;
 `;
 
-const ContentInput = styled.textarea`
-  display: block;
-  width: 60%;
-  margin: 0 auto;
-`;
+const ContentInputStyle = {
+  display: "block",
+  width: "60%",
+  margin: "0 auto",
+  fontSize: "16px",
+  padding: "5px",
+  height: "auto"
+};
 
 const SaveButton = styled.button``;
 
@@ -29,7 +33,9 @@ const NewNoteInput = props => {
   const inputStyle = {
     display: newNote ? "block" : "none",
     width: "60%",
-    margin: "0 auto"
+    margin: "0 auto",
+    fontSize: "18px",
+    padding: "5px"
   };
 
   return (
@@ -41,7 +47,8 @@ const NewNoteInput = props => {
         onChange={e => onTitleChange(e)}
         placeholder="Title"
       />
-      <ContentInput
+      <TextareaAutosize
+        style={ContentInputStyle}
         value={content}
         onChange={e => onContentChange(e)}
         onClick={onNewNote}
