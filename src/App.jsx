@@ -16,14 +16,15 @@ class App extends Component {
       { id: 4, title: "Test 4", content: "Test 4 content" }
     ],
     title: "",
-    content: ""
+    content: "",
+    newNote: false
   };
 
   onTitleChange = e => this.setState({ title: e.target.value });
 
   onContentChange = e => this.setState({ content: e.target.value });
 
-  onNewSave = newNote => {
+  onNewSave = () => {
     if (this.state.title || this.state.content) {
       this.setState({
         notes: [
@@ -35,7 +36,8 @@ class App extends Component {
           }
         ],
         title: "",
-        content: ""
+        content: "",
+        newNote: false
       });
     }
   };
@@ -56,11 +58,30 @@ class App extends Component {
     });
   };
 
+  onNewNote = () => {
+    if (!this.state.newNote) this.setState({ newNote: true });
+  };
+
+  saveNoteClickHandler = e => {
+    const { type } = e.target;
+    console.log(type);
+
+    if (this.state.newNote) {
+      // When creating a new note, if we click from one input to another, don't save.
+      if (type === "text" || type === "textarea") return;
+
+      // Auto save note when we click outside of inputs.
+      if (type === undefined) {
+        this.onNewSave();
+      }
+    }
+  };
+
   render() {
     const { title, content, notes } = this.state;
 
     return (
-      <div className="App">
+      <div className="App" onClick={e => this.saveNoteClickHandler(e)}>
         <MainDiv>
           <Header
             title={title}
@@ -68,6 +89,8 @@ class App extends Component {
             onTitleChange={this.onTitleChange}
             onContentChange={this.onContentChange}
             onNewSave={this.onNewSave}
+            newNote={this.state.newNote}
+            onNewNote={this.onNewNote}
           />
           <NotesList
             notes={notes}
