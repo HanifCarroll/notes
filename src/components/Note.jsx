@@ -3,9 +3,14 @@ import styled from "styled-components";
 
 const StyledContainer = styled.div`
   box-sizing: border-box;
-  border: 2px solid black;
+  background-color: white;
   margin: 0 10px 20px 10px;
-  padding: 0 2%;
+  padding: 5%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const ButtonDiv = styled.div``;
@@ -14,22 +19,37 @@ const EditButton = styled.button``;
 
 const DeleteButton = styled.button``;
 
-const EditTitleInput = styled.input``;
+const EditTitleInput = styled.input`
+  margin-bottom: 15px;
+  max-width: 80%;
+`;
 
-const EditTextArea = styled.textarea``;
+const EditTextArea = styled.textarea`
+  max-width: 80%;
+`;
 
 const NoteContentContainer = styled.div`
   overflow-y: auto;
   box-sizing: border-box;
   min-height: 60px;
   max-height: 400px;
+  margin-bottom: 30px;
 `;
 
 const NoteContent = styled.p`
   white-space: pre-line;
 `;
 
+const NoteTitle = styled.h3`
+  margin-bottom: 15px;
+`;
+
 class Note extends React.Component {
+  constructor(props) {
+    super(props);
+    this.titleInput = React.createRef();
+  }
+
   state = {
     edit: false,
     title: "",
@@ -68,7 +88,9 @@ class Note extends React.Component {
         />
       );
     }
-    return <h3>{this.props.note.title}</h3>;
+    return (
+      <NoteTitle onClick={this.onEditPress}>{this.props.note.title}</NoteTitle>
+    );
   };
 
   renderNoteContent = () => {
@@ -84,7 +106,9 @@ class Note extends React.Component {
     }
     return (
       <NoteContentContainer>
-        <NoteContent>{this.props.note.content}</NoteContent>
+        <NoteContent onClick={this.onEditPress}>
+          {this.props.note.content}
+        </NoteContent>
       </NoteContentContainer>
     );
   };
@@ -107,10 +131,6 @@ class Note extends React.Component {
     return (
       <DeleteButton onClick={this.props.onDeleteClick}>Delete</DeleteButton>
     );
-  };
-
-  renderButtons = () => {
-    return this.renderEditButton() && this.renderDeleteButton();
   };
 
   render() {

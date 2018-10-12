@@ -1,11 +1,21 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import styled, { injectGlobal } from "styled-components";
 import short from "short-uuid";
 
 import Header from "./components/Header";
 import NotesList from "./components/NotesList";
 
 const MainDiv = styled.div``;
+injectGlobal`
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #E8E8E8;
+  }
+`;
 
 class App extends Component {
   state = {
