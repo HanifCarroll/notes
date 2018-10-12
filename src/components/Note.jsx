@@ -42,6 +42,7 @@ const NoteTitle = styled.h3`
 `;
 
 const EditTextAreaStyle = {
+  resize: "none",
   maxWidth: "80%"
 };
 

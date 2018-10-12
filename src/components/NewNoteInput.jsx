@@ -13,7 +13,9 @@ const ContentInputStyle = {
   margin: "0 auto",
   fontSize: "16px",
   padding: "10px",
-  height: "auto"
+  height: "auto",
+  border: "none",
+  resize: "none"
 };
 
 const SaveButton = styled.button``;
@@ -30,19 +32,20 @@ const NewNoteInput = props => {
   } = props;
 
   // For some reason, using a styled component input messes up text insertion.
-  const inputStyle = {
+  const TitleInputStyle = {
     display: newNote ? "block" : "none",
     width: "60%",
     margin: "0 auto",
     fontSize: "18px",
-    padding: "10px"
+    padding: "10px",
+    border: "none"
   };
 
   return (
     <HeaderContainer>
       <input
         type="text"
-        style={inputStyle}
+        style={TitleInputStyle}
         value={title}
         onChange={e => onTitleChange(e)}
         placeholder="Title"
