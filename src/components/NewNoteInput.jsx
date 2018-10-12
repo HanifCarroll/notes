@@ -7,6 +7,12 @@ const HeaderContainer = styled.div`
   text-align: center;
 `;
 
+const SaveButton = styled.button`
+  margin-top: 10px;
+  width: 20%;
+  font-size: 14px;
+`;
+
 const ContentInputStyle = {
   display: "block",
   width: "60%",
@@ -15,10 +21,9 @@ const ContentInputStyle = {
   padding: "10px",
   height: "auto",
   border: "none",
-  resize: "none"
+  resize: "none",
+  boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)"
 };
-
-const SaveButton = styled.button``;
 
 const NewNoteInput = props => {
   const {
@@ -38,8 +43,11 @@ const NewNoteInput = props => {
     margin: "0 auto",
     fontSize: "18px",
     padding: "10px",
-    border: "none"
+    border: "none",
+    boxShadow: "0 4px 12px 0 rgba(0, 0, 0, 0.2)"
   };
+
+  const saveDisabled = !title.length && !content.length;
 
   return (
     <HeaderContainer>
@@ -58,7 +66,9 @@ const NewNoteInput = props => {
         placeholder="Write a note..."
       />
 
-      <SaveButton onClick={onNewSave}>Save</SaveButton>
+      <SaveButton onClick={onNewSave} disabled={saveDisabled}>
+        Save
+      </SaveButton>
     </HeaderContainer>
   );
 };
