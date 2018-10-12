@@ -3,10 +3,7 @@ import styled from "styled-components";
 
 const StyledContainer = styled.div`
   box-sizing: border-box;
-  min-height: 60px;
-  max-height: 400px;
   border: 2px solid black;
-  overflow-y: auto;
   margin: 0 10px 20px 10px;
   padding: 0 2%;
 `;
@@ -20,6 +17,13 @@ const DeleteButton = styled.button``;
 const EditTitleInput = styled.input``;
 
 const EditTextArea = styled.textarea``;
+
+const NoteContentContainer = styled.div`
+  overflow-y: auto;
+  box-sizing: border-box;
+  min-height: 60px;
+  max-height: 400px;
+`;
 
 const NoteContent = styled.p`
   white-space: pre-line;
@@ -78,7 +82,11 @@ class Note extends React.Component {
         />
       );
     }
-    return <NoteContent>{this.props.note.content}</NoteContent>;
+    return (
+      <NoteContentContainer>
+        <NoteContent>{this.props.note.content}</NoteContent>
+      </NoteContentContainer>
+    );
   };
 
   renderEditButton = () => {

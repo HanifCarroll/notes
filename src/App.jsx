@@ -67,9 +67,11 @@ class App extends Component {
     const { type } = e.target;
 
     if (newNote) {
-      if (!title.length && !content.length) this.setState({ newNote: false });
       // When creating a new note, if we click from one input to another, don't save.
       if (type === "text" || type === "textarea") return;
+
+      // If there isn't anything in the title or content, cancel the new note.
+      if (!title.length && !content.length) this.setState({ newNote: false });
 
       // Auto save note when we click outside of inputs.
       if (type === undefined) {
