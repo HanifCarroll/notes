@@ -1,55 +1,32 @@
 import React from "react";
 import styled from "styled-components";
 
-const HeaderContainer = styled.div`
-  margin: 0 10%;
-  text-align: center;
+const StyledHeader = styled.header`
+  display: grid;
+  grid-template-columns: 0.5fr 1.5fr;
+  grid-template-rows: 1fr;
+  grid-gap: 30px;
+  grid-template-areas: ". .";
+  height: 100%;
+  border: 2px solid black;
+  padding: 1%;
 `;
 
-const ContentInput = styled.textarea`
-  display: block;
-  width: 60%;
-  margin: 0 auto;
+const StyledLogo = styled.h1`
+  text-align: right;
 `;
 
-const SaveButton = styled.button``;
+const SearchInput = styled.input`
+  margin: auto 0;
+  width: 80%;
+`;
 
-const Header = props => {
-  const {
-    title,
-    content,
-    onTitleChange,
-    onContentChange,
-    onNewSave,
-    onNewNote,
-    newNote
-  } = props;
-
-  // For some reason, using a styled component input messes up text insertion.
-  const inputStyle = {
-    display: newNote ? "block" : "none",
-    width: "60%",
-    margin: "0 auto"
-  };
-
+const Header = () => {
   return (
-    <HeaderContainer>
-      <input
-        type="text"
-        style={inputStyle}
-        value={title}
-        onChange={e => onTitleChange(e)}
-        placeholder="Title"
-      />
-      <ContentInput
-        value={content}
-        onChange={e => onContentChange(e)}
-        onClick={onNewNote}
-        placeholder="Write a note..."
-      />
-
-      <SaveButton onClick={onNewSave}>Save</SaveButton>
-    </HeaderContainer>
+    <StyledHeader>
+      <StyledLogo>Notes</StyledLogo>
+      <SearchInput type="text" placeholder="Search notes..." />
+    </StyledHeader>
   );
 };
 

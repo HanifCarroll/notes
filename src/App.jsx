@@ -3,6 +3,7 @@ import styled, { injectGlobal } from "styled-components";
 import short from "short-uuid";
 
 import Header from "./components/Header";
+import NewNoteInput from "./components/NewNoteInput";
 import NotesList from "./components/NotesList";
 
 const MainDiv = styled.div``;
@@ -15,6 +16,7 @@ injectGlobal`
   body {
     background-color: #E8E8E8;
   }
+
 `;
 
 class App extends Component {
@@ -96,7 +98,8 @@ class App extends Component {
     return (
       <div className="App" onClick={e => this.saveNoteClickHandler(e)}>
         <MainDiv>
-          <Header
+          <Header />
+          <NewNoteInput
             title={title}
             content={content}
             onTitleChange={this.onTitleChange}
