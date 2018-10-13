@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^3.10.1",
+    "babel-plugin-import": "^1.9.1",
     "fuse.js": "^3.2.1",
     "react": "^16.5.2",
+    "react-app-rewired": "^1.6.2",
     "react-autosize-textarea": "^5.0.0",
     "react-dom": "^16.5.2",
-    "react-icons": "^3.2.0",
     "react-masonry-css": "^1.0.11",
     "react-scripts": "2.0.4",
     "short-uuid": "^3.0.0",
@@ -15,7 +17,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "rwstart": "react-app-rewired start",
     "build": "react-scripts build",
+    "rwbuild": "react-app-rewired build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

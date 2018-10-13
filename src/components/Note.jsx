@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import TextareaAutosize from "react-autosize-textarea";
-import { MdEdit, MdDelete, MdCancel, MdCheckCircle } from "react-icons/md";
+import { Popconfirm, message, Icon } from "antd";
 
 const StyledContainer = styled.div`
   box-sizing: border-box;
@@ -20,7 +20,6 @@ const ButtonDiv = styled.div`
 `;
 
 const EditButton = styled.button`
-  margin-right: 1px;
   background-color: white;
   border: none;
 `;
@@ -56,6 +55,10 @@ const EditTextAreaStyle = {
   resize: "none",
   width: "100%",
   fontSize: "16px"
+};
+
+const IconStyle = {
+  fontSize: "17px"
 };
 
 class Note extends React.Component {
@@ -108,6 +111,11 @@ class Note extends React.Component {
     this.setState({ edit: false });
   };
 
+  onDeleteClick = () => {
+    this.props.onDeleteClick();
+    message.success("Note deleted", 1.5);
+  };
+
   renderNoteTitle = () => {
     if (this.state.edit) {
       return (
@@ -151,13 +159,13 @@ class Note extends React.Component {
     if (this.state.edit) {
       return (
         <EditButton onClick={this.onEditSave}>
-          <MdCheckCircle size="1.5em" color="#3d3f3d" />
+          <Icon type="check" theme="outlined" style={IconStyle} />
         </EditButton>
       );
     }
     return (
       <EditButton onClick={this.onEditPress}>
-        <MdEdit size="1.5em" color="#3d3f3d" />
+        <Icon type="edit" theme="outlined" style={IconStyle} />
       </EditButton>
     );
   };
@@ -166,14 +174,19 @@ class Note extends React.Component {
     if (this.state.edit) {
       return (
         <DeleteButton onClick={() => this.setState({ edit: false })}>
-          <MdCancel size="1.5em" color="#3d3f3d" />
+          <Icon type="close" theme="outlined" style={IconStyle} />
         </DeleteButton>
       );
     }
     return (
-      <DeleteButton onClick={this.props.onDeleteClick}>
-        <MdDelete size="1.5em" color="#3d3f3d" />
-      </DeleteButton>
+      <Popconfirm
+        title="Are you sure you want to delete this note?"
+        onConfirm={this.onDeleteClick}
+        okText="Yes"
+        cancelText="No"
+      >
+        <Icon type="delete" theme="outlined" style={IconStyle} />
+      </Popconfirm>
     );
   };
 

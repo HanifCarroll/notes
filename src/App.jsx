@@ -180,7 +180,6 @@ class App extends Component {
       findAllMatches: false,
       keys: ["title", "content"],
       matchAllTokens: true,
-
       tokenize: true
     };
 
@@ -227,7 +226,6 @@ class App extends Component {
             content={content}
             onTitleChange={this.onTitleChange}
             onContentChange={this.onContentChange}
-            onNewSave={this.onNewSave}
             newNote={this.state.newNote}
             onNewNote={this.onNewNote}
           />

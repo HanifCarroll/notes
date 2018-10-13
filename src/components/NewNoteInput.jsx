@@ -7,16 +7,6 @@ const HeaderContainer = styled.div`
   text-align: center;
 `;
 
-const SaveButton = styled.button`
-  margin-top: 10px;
-  width: 20%;
-  font-size: 14px;
-  border-radius: 2px;
-  border-width: 0;
-  padding: 5px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-`;
-
 const ContentInputStyle = {
   display: "block",
   width: "60%",
@@ -35,7 +25,6 @@ const NewNoteInput = props => {
     content,
     onTitleChange,
     onContentChange,
-    onNewSave,
     onNewNote,
     newNote
   } = props;
@@ -50,8 +39,6 @@ const NewNoteInput = props => {
     border: "none",
     boxShadow: "0 4px 12px 0 rgba(0, 0, 0, 0.2)"
   };
-
-  const saveDisabled = !title.length && !content.length;
 
   return (
     <HeaderContainer>
@@ -69,10 +56,6 @@ const NewNoteInput = props => {
         onClick={onNewNote}
         placeholder="Write a note..."
       />
-
-      <SaveButton onClick={onNewSave} disabled={saveDisabled}>
-        Save
-      </SaveButton>
     </HeaderContainer>
   );
 };
