@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import styled, { injectGlobal } from "styled-components";
+import React from "react";
+import { injectGlobal } from "styled-components";
 import short from "short-uuid";
 import Fuse from "fuse.js";
 
@@ -7,7 +7,6 @@ import Header from "./components/Header";
 import NewNoteInput from "./components/NewNoteInput";
 import NotesList from "./components/NotesList";
 
-const MainDiv = styled.div``;
 injectGlobal`
   * {
     margin: 0;
@@ -21,7 +20,7 @@ injectGlobal`
   }
 `;
 
-class App extends Component {
+class App extends React.Component {
   state = {
     notes: [
       // { id: 1, title: "Test 1", content: "Test 1 content" },
@@ -133,6 +132,10 @@ class App extends Component {
     if (!this.state.newNote) this.setState({ newNote: true });
   };
 
+  onCancelNewNote = () => {
+    this.setState({ newNote: false });
+  };
+
   onSearchNotes = query => {
     // Show view with filtered notes if there's a search term.
     if (this.state.search.length) {
@@ -149,26 +152,6 @@ class App extends Component {
     // Execute onSearchNotes on enter key press.
     if (e.keyCode === 13) {
       this.onSearchNotes(this.state.search);
-    }
-  };
-
-  saveNoteClickHandler = e => {
-    // Place click handler on app, so that if user is entering a new note and clicks outside
-    // of the inputs, the note saves.  Or, if no content entered, the new note is canceled.
-    const { newNote, title, content } = this.state;
-    const { type } = e.target;
-
-    if (newNote) {
-      // When creating a new note, if we click from one input to another, don't save.
-      if (type === "text" || type === "textarea") return;
-
-      // If there isn't anything in the title or content, cancel the new note.
-      if (!title.length && !content.length) this.setState({ newNote: false });
-
-      // Auto save note when we click outside of inputs.
-      if (type === undefined) {
-        this.onNewSave();
-      }
     }
   };
 
@@ -214,27 +197,27 @@ class App extends Component {
     const { title, content, search, filteredNotes } = this.state;
 
     return (
-      <div className="App" onClick={e => this.saveNoteClickHandler(e)}>
-        <MainDiv>
-          <Header
-            search={search}
-            onSearchChange={this.onSearchChange}
-            onEnterPress={this.onEnterPress}
-          />
-          <NewNoteInput
-            title={title}
-            content={content}
-            onTitleChange={this.onTitleChange}
-            onContentChange={this.onContentChange}
-            newNote={this.state.newNote}
-            onNewNote={this.onNewNote}
-          />
-          <NotesList
-            notes={filteredNotes}
-            onDeleteClick={this.onDeleteNote}
-            onEditSave={this.onEditSave}
-          />
-        </MainDiv>
+      <div className="App">
+        <Header
+          search={search}
+          onSearchChange={this.onSearchChange}
+          onEnterPress={this.onEnterPress}
+        />
+        <NewNoteInput
+          title={title}
+          content={content}
+          onTitleChange={this.onTitleChange}
+          onContentChange={this.onContentChange}
+          newNote={this.state.newNote}
+          onNewNote={this.onNewNote}
+          onNewSave={this.onNewSave}
+          onCancelNewNote={this.onCancelNewNote}
+        />
+        <NotesList
+          notes={filteredNotes}
+          onDeleteClick={this.onDeleteNote}
+          onEditSave={this.onEditSave}
+        />
       </div>
     );
   }
