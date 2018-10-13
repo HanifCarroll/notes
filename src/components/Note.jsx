@@ -22,7 +22,7 @@ const DeleteButton = styled.button``;
 
 const EditTitleInput = styled.input`
   margin-bottom: 15px;
-  max-width: 80%;
+  width: 100%;
 `;
 
 const NoteContentContainer = styled.div`
@@ -43,20 +43,38 @@ const NoteTitle = styled.h3`
 
 const EditTextAreaStyle = {
   resize: "none",
-  maxWidth: "80%"
+  width: "100%"
 };
 
 class Note extends React.Component {
-  constructor(props) {
-    super(props);
-    this.titleInput = React.createRef();
-  }
-
   state = {
     edit: false,
     title: "",
     content: "",
     id: ""
+  };
+
+  componentDidMount = () => {
+    document.addEventListener("mousedown", this.handleClickOutside);
+    this.setState({
+      title: this.props.note.title,
+      content: this.props.note.content,
+      id: this.props.note.id
+    });
+  };
+
+  componentWillUnmount = () => {
+    document.removeEventListener("mousedown", this.handleClickOutside);
+  };
+
+  setWrapperRef = node => {
+    this.wrapperRef = node;
+  };
+
+  handleClickOutside = event => {
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      if (this.state.edit) this.onEditSave();
+    }
   };
 
   onEditPress = () => {
@@ -76,6 +94,22 @@ class Note extends React.Component {
     const { id, content, title } = this.state;
     this.props.onEditSave({ id, title, content });
     this.setState({ edit: false });
+  };
+
+  editSaveClickHandler = e => {
+    // Place click handler on note, so that if user is editing a note and clicks outside
+    // of the inputs, the note saves.
+    const { type, tagName } = e.target;
+    console.log(e["button"]);
+
+    // When creating a new note, if we click from one input to another, don't save.
+    if (type === "text" || type === "textarea") return;
+    if (tagName === "H3" || tagName === "P") return;
+
+    // Auto save note when we click outside of inputs.
+    if (tagName === "DIV") {
+      this.onEditSave();
+    }
   };
 
   renderNoteTitle = () => {
@@ -108,10 +142,8 @@ class Note extends React.Component {
       );
     }
     return (
-      <NoteContentContainer>
-        <NoteContent onClick={this.onEditPress}>
-          {this.props.note.content}
-        </NoteContent>
+      <NoteContentContainer onClick={this.onEditPress}>
+        <NoteContent>{this.props.note.content}</NoteContent>
       </NoteContentContainer>
     );
   };
@@ -136,16 +168,20 @@ class Note extends React.Component {
     );
   };
 
+  // Top level div is needed, because the click handler doesn't work with
+  // styled components.
   render() {
     return (
-      <StyledContainer>
-        {this.renderNoteTitle()}
-        {this.renderNoteContent()}
-        <ButtonDiv>
-          {this.renderEditButton()}
-          {this.renderDeleteButton()}
-        </ButtonDiv>
-      </StyledContainer>
+      <div ref={this.setWrapperRef}>
+        <StyledContainer onClicka={this.editSaveClickHandler}>
+          {this.renderNoteTitle()}
+          {this.renderNoteContent()}
+          <ButtonDiv>
+            {this.renderEditButton()}
+            {this.renderDeleteButton()}
+          </ButtonDiv>
+        </StyledContainer>
+      </div>
     );
   }
 }
