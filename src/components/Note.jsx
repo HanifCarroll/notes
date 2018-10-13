@@ -199,8 +199,8 @@ class Note extends React.Component {
           {this.renderNoteTitle()}
           {this.renderNoteContent()}
           <ButtonDiv>
-            {this.renderEditButton()}
             {this.renderDeleteButton()}
+            {this.renderEditButton()}
           </ButtonDiv>
         </StyledContainer>
       </div>

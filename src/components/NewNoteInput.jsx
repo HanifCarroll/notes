@@ -9,7 +9,7 @@ const HeaderContainer = styled.div`
 
 const ContentInputStyle = {
   display: "block",
-  width: "50vw",
+  width: "60vw",
   fontSize: "16px",
   padding: "10px",
   border: "none",
@@ -42,7 +42,7 @@ class NewNoteInput extends React.Component {
   // For some reason, using a styled component input messes up text insertion.
   titleInputStyle = () => ({
     display: this.props.newNote ? "block" : "none",
-    width: "100%",
+    width: "60vw",
     margin: "0 auto",
     fontSize: "18px",
     padding: "10px",
