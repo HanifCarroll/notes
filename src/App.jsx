@@ -37,12 +37,12 @@ class App extends Component {
     newNote: false
   };
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     // Put the filter in the state, because it's used throughout
     // the component's lifecycle.
     await this.loadFromLocalStorage();
     this.syncNotesAndFilteredNotes();
-  }
+  };
 
   syncNotesAndFilteredNotes = () =>
     this.setState({
@@ -77,10 +77,13 @@ class App extends Component {
           newNote: false
         },
         () => {
-          this.setState({
-            fuseFilter: this.fuseFilter(),
-            filteredNotes: this.state.notes
-          });
+          this.setState(
+            {
+              fuseFilter: this.fuseFilter(),
+              filteredNotes: this.state.notes
+            },
+            () => this.saveToLocalStorage()
+          );
         }
       );
     }
@@ -98,9 +101,12 @@ class App extends Component {
     // Replace old notes array with array containing edited notes, then update the fuse search.
     this.setState(
       { notes },
-      this.setState({
-        fuseFilter: this.fuseFilter()
-      })
+      this.setState(
+        {
+          fuseFilter: this.fuseFilter()
+        },
+        () => this.saveToLocalStorage()
+      )
     );
   };
 
@@ -113,7 +119,12 @@ class App extends Component {
         notes: notes.filter(note => note.id !== noteId),
         filteredNotes: filteredNotes.filter(note => note.id !== noteId)
       },
-      () => this.setState({ fuseFilter: this.fuseFilter() })
+      () => {
+        // Alert fuse filter of updated notes array.
+        this.setState({ fuseFilter: this.fuseFilter() }, () =>
+          this.saveToLocalStorage()
+        );
+      }
     );
   };
 
@@ -225,7 +236,6 @@ class App extends Component {
             onDeleteClick={this.onDeleteNote}
             onEditSave={this.onEditSave}
           />
-          <button onClick={this.saveToLocalStorage}>Local Storage</button>
         </MainDiv>
       </div>
     );
