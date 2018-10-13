@@ -6,6 +6,7 @@ const StyledHeader = styled.header`
   padding: 1%;
   display: flex;
   justify-content: center;
+  border-bottom: 1px solid grey;
 `;
 
 const StyledLogo = styled.h1`

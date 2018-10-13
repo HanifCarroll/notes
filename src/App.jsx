@@ -24,10 +24,10 @@ injectGlobal`
 class App extends Component {
   state = {
     notes: [
-      { id: 1, title: "Test 1", content: "Test 1 content" },
-      { id: 2, title: "Test 2", content: "Test 2 content" },
-      { id: 3, title: "Test 3", content: "Test 3 content" },
-      { id: 4, title: "Test 4", content: "Test 4 content" }
+      // { id: 1, title: "Test 1", content: "Test 1 content" },
+      // { id: 2, title: "Test 2", content: "Test 2 content" },
+      // { id: 3, title: "Test 3", content: "Test 3 content" },
+      // { id: 4, title: "Test 4", content: "Test 4 content" }
     ],
     filteredNotes: [],
     fuseFilter: null,
@@ -37,14 +37,18 @@ class App extends Component {
     newNote: false
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     // Put the filter in the state, because it's used throughout
     // the component's lifecycle.
+    await this.loadFromLocalStorage();
+    this.syncNotesAndFilteredNotes();
+  }
+
+  syncNotesAndFilteredNotes = () =>
     this.setState({
       fuseFilter: this.fuseFilter(),
       filteredNotes: this.state.notes
     });
-  }
 
   onTitleChange = e => this.setState({ title: e.target.value });
 
@@ -53,6 +57,8 @@ class App extends Component {
   onSearchChange = e => this.setState({ search: e.target.value });
 
   onNewSave = () => {
+    // Executed when a new note is entered from the 'new note input' up top.
+
     if (this.state.title || this.state.content) {
       // Add new note to notes array, and update the fuse search to include it.
       this.setState(
@@ -67,14 +73,22 @@ class App extends Component {
           ],
           title: "",
           content: "",
+          search: "",
           newNote: false
         },
-        () => this.setState({ fuseFilter: this.fuseFilter() })
+        () => {
+          this.setState({
+            fuseFilter: this.fuseFilter(),
+            filteredNotes: this.state.notes
+          });
+        }
       );
     }
   };
 
   onEditSave = note => {
+    // Executed when saving an edited note.
+
     const notes = this.state.notes;
     const oldNote = notes.find(old => old.id === note.id);
 
@@ -91,37 +105,45 @@ class App extends Component {
   };
 
   onDeleteNote = noteId => {
+    const { notes, filteredNotes } = this.state;
+
+    // Remove the note from both arrays.
     this.setState(
       {
-        notes: this.state.notes.filter(note => note.id !== noteId)
+        notes: notes.filter(note => note.id !== noteId),
+        filteredNotes: filteredNotes.filter(note => note.id !== noteId)
       },
       () => this.setState({ fuseFilter: this.fuseFilter() })
     );
   };
 
   onNewNote = () => {
+    // Switch to show hidden title bar when user clicks input for new note content.
     if (!this.state.newNote) this.setState({ newNote: true });
   };
 
   onSearchNotes = query => {
+    // Show view with filtered notes if there's a search term.
     if (this.state.search.length) {
       return this.setState({
         filteredNotes: this.state.fuseFilter.search(query)
       });
     }
 
-    // If there isn't a query, then reset the filteredNotes to show all notes.
+    // If there isn't a search term, then reset the filteredNotes to show all notes.
     this.setState({ filteredNotes: this.state.notes });
   };
 
   onEnterPress = e => {
-    // If there's a search term, execute the search.
+    // Execute onSearchNotes on enter key press.
     if (e.keyCode === 13) {
       this.onSearchNotes(this.state.search);
     }
   };
 
   saveNoteClickHandler = e => {
+    // Place click handler on app, so that if user is entering a new note and clicks outside
+    // of the inputs, the note saves.  Or, if no content entered, the new note is canceled.
     const { newNote, title, content } = this.state;
     const { type } = e.target;
 
@@ -140,10 +162,8 @@ class App extends Component {
   };
 
   fuseFilter = () => {
-    // Create a new Fuse object with the corresponding options, then return
+    // Create a new Fuse object (search filter) with the corresponding options, then return
     // the Fuse object to be used in searching.
-
-    //const attributes = Object.keys(this.state.notes[0]).map(key => String(key));
 
     const options = {
       findAllMatches: false,
@@ -154,6 +174,30 @@ class App extends Component {
     };
 
     return new Fuse(this.state.notes, options);
+  };
+
+  saveToLocalStorage = () => {
+    localStorage.setItem("notes", JSON.stringify(this.state.notes));
+  };
+
+  loadFromLocalStorage = () => {
+    return new Promise((resolve, reject) => {
+      // if the key exists in localStorage
+      if (localStorage.hasOwnProperty("notes")) {
+        // get the key's value from localStorage
+        let loadedNotes = localStorage.getItem("notes");
+
+        // parse the localStorage string and setState
+        try {
+          loadedNotes = JSON.parse(loadedNotes);
+          this.setState({ notes: loadedNotes });
+        } catch (e) {
+          console.log(e);
+          reject(e);
+        }
+      }
+      resolve();
+    });
   };
 
   render() {
@@ -181,6 +225,7 @@ class App extends Component {
             onDeleteClick={this.onDeleteNote}
             onEditSave={this.onEditSave}
           />
+          <button onClick={this.saveToLocalStorage}>Local Storage</button>
         </MainDiv>
       </div>
     );
