@@ -7,6 +7,7 @@
     "react": "^16.5.2",
     "react-autosize-textarea": "^5.0.0",
     "react-dom": "^16.5.2",
+    "react-icons": "^3.2.0",
     "react-masonry-css": "^1.0.11",
     "react-scripts": "2.0.4",
     "short-uuid": "^3.0.0",

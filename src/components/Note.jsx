@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import TextareaAutosize from "react-autosize-textarea";
+import { MdEdit, MdDelete, MdCancel, MdCheckCircle } from "react-icons/md";
 
 const StyledContainer = styled.div`
   box-sizing: border-box;
@@ -14,11 +15,20 @@ const StyledContainer = styled.div`
   }
 `;
 
-const ButtonDiv = styled.div``;
+const ButtonDiv = styled.div`
+  text-align: right;
+`;
 
-const EditButton = styled.button``;
+const EditButton = styled.button`
+  margin-right: 1px;
+  background-color: white;
+  border: none;
+`;
 
-const DeleteButton = styled.button``;
+const DeleteButton = styled.button`
+  background-color: white;
+  border: none;
+`;
 
 const EditTitleInput = styled.input`
   margin-bottom: 15px;
@@ -35,6 +45,7 @@ const NoteContentContainer = styled.div`
 
 const NoteContent = styled.p`
   white-space: pre-line;
+  word-wrap: break-word;
 `;
 
 const NoteTitle = styled.h3`
@@ -43,7 +54,8 @@ const NoteTitle = styled.h3`
 
 const EditTextAreaStyle = {
   resize: "none",
-  width: "100%"
+  width: "100%",
+  fontSize: "16px"
 };
 
 class Note extends React.Component {
@@ -96,22 +108,6 @@ class Note extends React.Component {
     this.setState({ edit: false });
   };
 
-  editSaveClickHandler = e => {
-    // Place click handler on note, so that if user is editing a note and clicks outside
-    // of the inputs, the note saves.
-    const { type, tagName } = e.target;
-    console.log(e["button"]);
-
-    // When creating a new note, if we click from one input to another, don't save.
-    if (type === "text" || type === "textarea") return;
-    if (tagName === "H3" || tagName === "P") return;
-
-    // Auto save note when we click outside of inputs.
-    if (tagName === "DIV") {
-      this.onEditSave();
-    }
-  };
-
   renderNoteTitle = () => {
     if (this.state.edit) {
       return (
@@ -132,13 +128,16 @@ class Note extends React.Component {
   renderNoteContent = () => {
     if (this.state.edit) {
       return (
-        <TextareaAutosize
-          style={EditTextAreaStyle}
-          onChange={e =>
-            this.setState(this.onInputChange("content", e.target.value))
-          }
-          value={this.state.content}
-        />
+        <NoteContentContainer>
+          <TextareaAutosize
+            style={EditTextAreaStyle}
+            wrap="hard"
+            onChange={e =>
+              this.setState(this.onInputChange("content", e.target.value))
+            }
+            value={this.state.content}
+          />
+        </NoteContentContainer>
       );
     }
     return (
@@ -150,21 +149,31 @@ class Note extends React.Component {
 
   renderEditButton = () => {
     if (this.state.edit) {
-      return <EditButton onClick={this.onEditSave}>Save</EditButton>;
+      return (
+        <EditButton onClick={this.onEditSave}>
+          <MdCheckCircle size="1.5em" color="#3d3f3d" />
+        </EditButton>
+      );
     }
-    return <EditButton onClick={this.onEditPress}>Edit</EditButton>;
+    return (
+      <EditButton onClick={this.onEditPress}>
+        <MdEdit size="1.5em" color="#3d3f3d" />
+      </EditButton>
+    );
   };
 
   renderDeleteButton = () => {
     if (this.state.edit) {
       return (
         <DeleteButton onClick={() => this.setState({ edit: false })}>
-          Cancel
+          <MdCancel size="1.5em" color="#3d3f3d" />
         </DeleteButton>
       );
     }
     return (
-      <DeleteButton onClick={this.props.onDeleteClick}>Delete</DeleteButton>
+      <DeleteButton onClick={this.props.onDeleteClick}>
+        <MdDelete size="1.5em" color="#3d3f3d" />
+      </DeleteButton>
     );
   };
 
@@ -173,7 +182,7 @@ class Note extends React.Component {
   render() {
     return (
       <div ref={this.setWrapperRef}>
-        <StyledContainer onClicka={this.editSaveClickHandler}>
+        <StyledContainer>
           {this.renderNoteTitle()}
           {this.renderNoteContent()}
           <ButtonDiv>

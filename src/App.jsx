@@ -16,9 +16,9 @@ injectGlobal`
   }
 
   body {
+    color: #3D3F3D;
     background-color: #E8E8E8;
   }
-
 `;
 
 class App extends Component {

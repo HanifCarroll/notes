@@ -11,6 +11,10 @@ const SaveButton = styled.button`
   margin-top: 10px;
   width: 20%;
   font-size: 14px;
+  border-radius: 2px;
+  border-width: 0;
+  padding: 5px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 `;
 
 const ContentInputStyle = {
