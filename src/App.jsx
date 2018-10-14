@@ -1,33 +1,15 @@
 import React from "react";
-import { injectGlobal } from "styled-components";
 import short from "short-uuid";
 import Fuse from "fuse.js";
 
 import Header from "./components/Header";
 import NewNoteInput from "./components/NewNoteInput";
 import NotesList from "./components/NotesList";
-
-injectGlobal`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    color: #3D3F3D;
-    background-color: #E8E8E8;
-  }
-`;
+import "./App.css";
 
 class App extends React.Component {
   state = {
-    notes: [
-      // { id: 1, title: "Test 1", content: "Test 1 content" },
-      // { id: 2, title: "Test 2", content: "Test 2 content" },
-      // { id: 3, title: "Test 3", content: "Test 3 content" },
-      // { id: 4, title: "Test 4", content: "Test 4 content" }
-    ],
+    notes: [],
     filteredNotes: [],
     fuseFilter: null,
     search: "",

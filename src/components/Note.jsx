@@ -57,8 +57,13 @@ const EditTextAreaStyle = {
   fontSize: "16px"
 };
 
-const IconStyle = {
+const EditIconStyle = {
   fontSize: "17px"
+};
+
+const DeleteIconStyle = {
+  fontSize: "17px",
+  marginRight: "10px"
 };
 
 class Note extends React.Component {
@@ -159,13 +164,13 @@ class Note extends React.Component {
     if (this.state.edit) {
       return (
         <EditButton onClick={this.onEditSave}>
-          <Icon type="check" theme="outlined" style={IconStyle} />
+          <Icon type="check" theme="outlined" style={EditIconStyle} />
         </EditButton>
       );
     }
     return (
       <EditButton onClick={this.onEditPress}>
-        <Icon type="edit" theme="outlined" style={IconStyle} />
+        <Icon type="edit" theme="outlined" style={EditIconStyle} />
       </EditButton>
     );
   };
@@ -174,7 +179,7 @@ class Note extends React.Component {
     if (this.state.edit) {
       return (
         <DeleteButton onClick={() => this.setState({ edit: false })}>
-          <Icon type="close" theme="outlined" style={IconStyle} />
+          <Icon type="close" theme="outlined" style={DeleteIconStyle} />
         </DeleteButton>
       );
     }
@@ -185,7 +190,7 @@ class Note extends React.Component {
         okText="Yes"
         cancelText="No"
       >
-        <Icon type="delete" theme="outlined" style={IconStyle} />
+        <Icon type="delete" theme="outlined" style={DeleteIconStyle} />
       </Popconfirm>
     );
   };
