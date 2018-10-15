@@ -1,0 +1,16 @@
+.modal {
+  width: 80vw;
+  top: -20%;
+
+  @media screen and (min-width: 750px) {
+    width: 60vw;
+  }
+
+  @media screen and (min-width: 1000px) {
+    width: 40vw;
+  }
+}
+
+.overlay {
+  background-color: rgba(232, 232, 232, 0.8);
+}

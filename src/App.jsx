@@ -5,7 +5,8 @@ import Fuse from "fuse.js";
 import Header from "./components/Header";
 import NewNoteInput from "./components/NewNoteInput";
 import NotesList from "./components/NotesList";
-import "./App.css";
+
+import "./App.scss";
 
 class App extends React.Component {
   state = {

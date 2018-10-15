@@ -1,21 +1,7 @@
 import React from "react";
-import styled from "styled-components";
 import TextareaAutosize from "react-autosize-textarea";
 
-const HeaderContainer = styled.div`
-  text-align: center;
-  display: inline-block;
-`;
-
-const ContentInputStyle = {
-  display: "block",
-  width: "60vw",
-  fontSize: "16px",
-  padding: "10px",
-  border: "none",
-  resize: "none",
-  boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)"
-};
+import styles from "./NewNoteInput.module.scss";
 
 class NewNoteInput extends React.Component {
   componentDidMount = () => {
@@ -39,17 +25,6 @@ class NewNoteInput extends React.Component {
     }
   };
 
-  // For some reason, using a styled component input messes up text insertion.
-  titleInputStyle = () => ({
-    display: this.props.newNote ? "block" : "none",
-    width: "60vw",
-    margin: "0 auto",
-    fontSize: "18px",
-    padding: "10px",
-    border: "none",
-    boxShadow: "0 4px 12px 0 rgba(0, 0, 0, 0.2)"
-  });
-
   render() {
     const {
       title,
@@ -59,8 +34,6 @@ class NewNoteInput extends React.Component {
       onNewNote
     } = this.props;
 
-    // Top level div is needed, because the click handler doesn't work with
-    // styled components.
     return (
       <div style={{ textAlign: "center", marginTop: "30px" }}>
         <div
@@ -71,22 +44,23 @@ class NewNoteInput extends React.Component {
             margin: "0 auto"
           }}
         >
-          <HeaderContainer>
+          <div>
             <input
               type="text"
-              style={this.titleInputStyle()}
+              style={{ display: this.props.newNote ? "block" : "none" }}
+              className={styles["title-input"]}
               value={title}
               onChange={e => onTitleChange(e)}
               placeholder="Title"
             />
             <TextareaAutosize
-              style={ContentInputStyle}
+              className={styles["content-input"]}
               value={content}
               onChange={e => onContentChange(e)}
               onClick={onNewNote}
               placeholder="Write a note..."
             />
-          </HeaderContainer>
+          </div>
         </div>
       </div>
     );

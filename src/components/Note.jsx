@@ -4,7 +4,7 @@ import TextareaAutosize from "react-autosize-textarea";
 import { Popconfirm, message, Icon } from "antd";
 import Modal from "react-responsive-modal";
 
-import styles from "./Note.module.css";
+import styles from "./Note.module.scss";
 
 const StyledContainer = styled.div`
   box-sizing: border-box;

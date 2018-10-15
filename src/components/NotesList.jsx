@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Masonry from "react-masonry-css";
 
-import "./NotesList.css";
+import styles from "./NotesList.module.scss";
 
 import Note from "./Note";
 
@@ -30,11 +30,7 @@ const NotesList = props => {
 
   return (
     <NotesContainer>
-      <Masonry
-        breakpointCols={breakpointColumnsObj}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
-      >
+      <Masonry breakpointCols={breakpointColumnsObj} className={styles.grid}>
         {renderNotesList()}
       </Masonry>
     </NotesContainer>
