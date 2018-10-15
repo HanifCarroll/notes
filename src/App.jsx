@@ -16,7 +16,7 @@ class App extends React.Component {
     search: "",
     title: "",
     content: "",
-    newNote: false
+    isNewNote: false
   };
 
   componentDidMount = async () => {
@@ -28,7 +28,7 @@ class App extends React.Component {
 
   syncNotesAndFilteredNotes = () =>
     this.setState({
-      fuseFilter: this.fuseFilter(),
+      fuseFilter: this.fuseFilter(this.state.notes),
       filteredNotes: this.state.notes
     });
 
@@ -43,30 +43,26 @@ class App extends React.Component {
 
     if (this.state.title || this.state.content) {
       // Add new note to notes array, and update the fuse search to include it.
+      const newNotes = [
+        ...this.state.notes,
+        {
+          title: this.state.title,
+          content: this.state.content,
+          id: short.uuid()
+        }
+      ];
+
       this.setState(
         {
-          notes: [
-            ...this.state.notes,
-            {
-              title: this.state.title,
-              content: this.state.content,
-              id: short.uuid()
-            }
-          ],
+          notes: newNotes,
+          filteredNotes: newNotes,
+          fuseFilter: this.fuseFilter(newNotes),
           title: "",
           content: "",
           search: "",
-          newNote: false
+          isNewNote: false
         },
-        () => {
-          this.setState(
-            {
-              fuseFilter: this.fuseFilter(),
-              filteredNotes: this.state.notes
-            },
-            () => this.saveToLocalStorage()
-          );
-        }
+        () => this.saveToLocalStorage()
       );
     }
   };
@@ -74,21 +70,25 @@ class App extends React.Component {
   onEditSave = note => {
     // Executed when saving an edited note.
 
-    const notes = this.state.notes;
-    const oldNote = notes.find(old => old.id === note.id);
-
-    oldNote.title = note.title;
-    oldNote.content = note.content;
+    const { notes, search } = this.state;
+    const newNotes = notes.map(
+      currentNote => (currentNote.id === note.id ? note : currentNote)
+    );
 
     // Replace old notes array with array containing edited notes, then update the fuse search.
     this.setState(
-      { notes },
-      this.setState(
-        {
-          fuseFilter: this.fuseFilter()
-        },
-        () => this.saveToLocalStorage()
-      )
+      { notes: newNotes, fuseFilter: this.fuseFilter(newNotes) },
+
+      () => {
+        // If there's a search term, update the filteredNotes with a new search from the filter
+        search.length
+          ? this.setState({
+              filteredNotes: this.state.fuseFilter.search(search)
+            })
+          : // Otherwise, set filteredNotes = to newNotes.
+            this.setState({ filteredNotes: newNotes });
+        this.saveToLocalStorage();
+      }
     );
   };
 
@@ -112,18 +112,19 @@ class App extends React.Component {
 
   onNewNote = () => {
     // Switch to show hidden title bar when user clicks input for new note content.
-    if (!this.state.newNote) this.setState({ newNote: true });
+    if (!this.state.isNewNote) this.setState({ isNewNote: true });
   };
 
   onCancelNewNote = () => {
-    this.setState({ newNote: false });
+    this.setState({ isNewNote: false });
   };
 
-  onSearchNotes = query => {
+  onSearchNotes = () => {
     // Show view with filtered notes if there's a search term.
-    if (this.state.search.length) {
+    const { search, fuseFilter } = this.state;
+    if (search.length) {
       return this.setState({
-        filteredNotes: this.state.fuseFilter.search(query)
+        filteredNotes: fuseFilter.search(search)
       });
     }
 
@@ -134,11 +135,11 @@ class App extends React.Component {
   onEnterPress = e => {
     // Execute onSearchNotes on enter key press.
     if (e.keyCode === 13) {
-      this.onSearchNotes(this.state.search);
+      this.onSearchNotes();
     }
   };
 
-  fuseFilter = () => {
+  fuseFilter = notesArray => {
     // Create a new Fuse object (search filter) with the corresponding options, then return
     // the Fuse object to be used in searching.
 
@@ -149,7 +150,7 @@ class App extends React.Component {
       tokenize: true
     };
 
-    return new Fuse(this.state.notes, options);
+    return new Fuse(notesArray, options);
   };
 
   saveToLocalStorage = () => {
@@ -177,7 +178,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { title, content, search, filteredNotes } = this.state;
+    const { title, content, search } = this.state;
 
     return (
       <div className="App">
@@ -191,13 +192,13 @@ class App extends React.Component {
           content={content}
           onTitleChange={this.onTitleChange}
           onContentChange={this.onContentChange}
-          newNote={this.state.newNote}
+          isNewNote={this.state.isNewNote}
           onNewNote={this.onNewNote}
           onNewSave={this.onNewSave}
           onCancelNewNote={this.onCancelNewNote}
         />
         <NotesList
-          notes={filteredNotes}
+          notes={this.state.filteredNotes}
           onDeleteClick={this.onDeleteNote}
           onEditSave={this.onEditSave}
           onShowModal={this.onShowModal}

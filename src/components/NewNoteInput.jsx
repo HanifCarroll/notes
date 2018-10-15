@@ -31,7 +31,8 @@ class NewNoteInput extends React.Component {
       content,
       onTitleChange,
       onContentChange,
-      onNewNote
+      onNewNote,
+      isNewNote
     } = this.props;
 
     return (
@@ -47,7 +48,7 @@ class NewNoteInput extends React.Component {
           <div>
             <input
               type="text"
-              style={{ display: this.props.newNote ? "block" : "none" }}
+              style={{ display: isNewNote ? "block" : "none" }}
               className={styles["title-input"]}
               value={title}
               onChange={e => onTitleChange(e)}
