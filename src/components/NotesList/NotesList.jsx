@@ -1,14 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import Masonry from "react-masonry-css";
 
+import Note from "../Note/Note";
+
 import styles from "./NotesList.module.scss";
-
-import Note from "./Note";
-
-const NotesContainer = styled.div`
-  margin: 3% 10% 0 10%;
-`;
 
 const breakpointColumnsObj = {
   default: 4,
@@ -29,11 +24,11 @@ const NotesList = props => {
     ));
 
   return (
-    <NotesContainer>
+    <div className={styles.container}>
       <Masonry breakpointCols={breakpointColumnsObj} className={styles.grid}>
         {renderNotesList()}
       </Masonry>
-    </NotesContainer>
+    </div>
   );
 };
 

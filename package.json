@@ -14,8 +14,7 @@
     "react-masonry-css": "^1.0.11",
     "react-responsive-modal": "^3.4.0",
     "react-scripts": "2.0.4",
-    "short-uuid": "^3.0.0",
-    "styled-components": "^3.4.9"
+    "short-uuid": "^3.0.0"
   },
   "scripts": {
     "start": "react-app-rewired start",

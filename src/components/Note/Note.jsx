@@ -1,75 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import TextareaAutosize from "react-autosize-textarea";
 import { Popconfirm, message, Icon } from "antd";
 import Modal from "react-responsive-modal";
 
 import styles from "./Note.module.scss";
-
-const StyledContainer = styled.div`
-  box-sizing: border-box;
-  background-color: white;
-  margin: 0 10px 20px 10px;
-  padding: 5%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  &:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  }
-`;
-
-const ButtonDiv = styled.div`
-  text-align: right;
-`;
-
-const EditButton = styled.button`
-  background-color: white;
-  border: none;
-`;
-
-const DeleteButton = styled.button`
-  background-color: white;
-  border: none;
-`;
-
-const EditTitleInput = styled.input`
-  margin-bottom: 15px;
-  width: 100%;
-  border: none;
-`;
-
-const NoteContentContainer = styled.div`
-  overflow-y: auto;
-  box-sizing: border-box;
-  min-height: 60px;
-  max-height: 400px;
-  margin-bottom: 30px;
-`;
-
-const NoteContent = styled.p`
-  white-space: pre-line;
-  word-wrap: break-word;
-`;
-
-const NoteTitle = styled.h3`
-  margin-bottom: 15px;
-`;
-
-const EditTextAreaStyle = {
-  resize: "none",
-  width: "100%",
-  fontSize: "16px",
-  border: "none"
-};
-
-const EditIconStyle = {
-  fontSize: "17px"
-};
-
-const DeleteIconStyle = {
-  fontSize: "17px",
-  marginRight: "10px"
-};
 
 class Note extends React.Component {
   state = {
@@ -80,18 +14,18 @@ class Note extends React.Component {
     isModalVisible: false
   };
 
-  componentDidMount = () => {
+  componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
     this.setState({
       title: this.props.note.title,
       content: this.props.note.content,
       id: this.props.note.id
     });
-  };
+  }
 
-  componentWillUnmount = () => {
+  componentWillUnmount() {
     document.removeEventListener("mousedown", this.handleClickOutside);
-  };
+  }
 
   setWrapperRef = node => {
     this.wrapperRef = node;
@@ -132,39 +66,51 @@ class Note extends React.Component {
 
   renderNoteTitle = () => {
     return (
-      <NoteTitle onClick={this.onEditPress}>{this.props.note.title}</NoteTitle>
+      <h3 className={styles["note-title"]} onClick={this.onEditPress}>
+        {this.props.note.title}
+      </h3>
     );
   };
 
   renderNoteContent = () => {
     return (
-      <NoteContentContainer onClick={this.onEditPress}>
-        <NoteContent>{this.props.note.content}</NoteContent>
-      </NoteContentContainer>
+      <div
+        className={styles["note-content-container"]}
+        onClick={this.onEditPress}
+      >
+        <p className={styles["note-content"]}>{this.props.note.content}</p>
+      </div>
     );
   };
 
   renderEditButton = () => {
     if (this.state.edit) {
       return (
-        <EditButton onClick={this.onEditSave}>
-          <Icon type="check" theme="outlined" style={EditIconStyle} />
-        </EditButton>
+        <button className={styles.button} onClick={this.onEditSave}>
+          <Icon className={styles["edit-icon"]} type="check" theme="outlined" />
+        </button>
       );
     }
     return (
-      <EditButton onClick={this.onEditPress}>
-        <Icon type="edit" theme="outlined" style={EditIconStyle} />
-      </EditButton>
+      <button className={styles.button} onClick={this.onEditPress}>
+        <Icon className={styles["edit-icon"]} type="edit" theme="outlined" />
+      </button>
     );
   };
 
   renderDeleteButton = () => {
     if (this.state.edit) {
       return (
-        <DeleteButton onClick={() => this.setState({ edit: false })}>
-          <Icon type="close" theme="outlined" style={DeleteIconStyle} />
-        </DeleteButton>
+        <button
+          className={styles.button}
+          onClick={() => this.setState({ edit: false })}
+        >
+          <Icon
+            type="close"
+            theme="outlined"
+            className={styles["delete-icon"]}
+          />
+        </button>
       );
     }
     return (
@@ -174,7 +120,11 @@ class Note extends React.Component {
         okText="Yes"
         cancelText="No"
       >
-        <Icon type="delete" theme="outlined" style={DeleteIconStyle} />
+        <Icon
+          type="delete"
+          theme="outlined"
+          className={styles["delete-icon"]}
+        />
       </Popconfirm>
     );
   };
@@ -190,7 +140,8 @@ class Note extends React.Component {
           animationDuration={300}
         >
           <div ref={this.setWrapperRef}>
-            <EditTitleInput
+            <input
+              className={styles["title-input"]}
               type="text"
               value={this.state.title}
               onChange={e =>
@@ -199,7 +150,7 @@ class Note extends React.Component {
               placeholder="Title"
             />
             <TextareaAutosize
-              style={EditTextAreaStyle}
+              className={styles.textarea}
               wrap="hard"
               onChange={e =>
                 this.setState(this.onInputChange("content", e.target.value))
@@ -215,15 +166,15 @@ class Note extends React.Component {
 
   render() {
     return (
-      <StyledContainer>
+      <div className={styles.container}>
         {this.renderNoteTitle()}
         {this.renderNoteContent()}
-        <ButtonDiv>
+        <div className={styles["button-container"]}>
           {this.renderDeleteButton()}
           {this.renderEditButton()}
-        </ButtonDiv>
+        </div>
         {this.renderModal()}
-      </StyledContainer>
+      </div>
     );
   }
 }

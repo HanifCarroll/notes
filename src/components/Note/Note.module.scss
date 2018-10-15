@@ -1,0 +1,76 @@
+.container {
+  box-sizing: border-box;
+  background-color: white;
+  margin: 0 10px 20px 10px;
+  padding: 5%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+.button-container {
+  text-align: right;
+}
+
+.button {
+  background-color: white;
+  border: none;
+}
+
+.title-input {
+  margin-bottom: 15px;
+  width: 100%;
+  border: none;
+}
+
+.note-content-container {
+  overflow-y: auto;
+  box-sizing: border-box;
+  min-height: 60px;
+  max-height: 400px;
+  margin-bottom: 30px;
+}
+
+.note-content {
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+
+.note-title {
+  margin-bottom: 15px;
+}
+
+.textarea {
+  resize: none;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+}
+
+.edit-icon {
+  font-size: 17px;
+}
+
+.delete-icon {
+  font-size: 17px;
+  margin-right: 10px;
+}
+
+.modal {
+  width: 80vw;
+  top: -20%;
+
+  @media screen and (min-width: 750px) {
+    width: 60vw;
+  }
+
+  @media screen and (min-width: 1000px) {
+    width: 40vw;
+  }
+}
+
+.overlay {
+  background-color: rgba(232, 232, 232, 0.8);
+}

@@ -2,9 +2,9 @@ import React from "react";
 import short from "short-uuid";
 import Fuse from "fuse.js";
 
-import Header from "./components/Header";
-import NewNoteInput from "./components/NewNoteInput";
-import NotesList from "./components/NotesList";
+import Header from "./components/Header/Header";
+import NewNoteInput from "./components/NewNoteInput/NewNoteInput";
+import NotesList from "./components/NotesList/NotesList";
 
 import "./App.scss";
 
@@ -19,12 +19,12 @@ class App extends React.Component {
     isNewNote: false
   };
 
-  componentDidMount = async () => {
+  async componentDidMount() {
     // Put the filter in the state, because it's used throughout
     // the component's lifecycle.
     await this.loadFromLocalStorage();
     this.syncNotesAndFilteredNotes();
-  };
+  }
 
   syncNotesAndFilteredNotes = () =>
     this.setState({
