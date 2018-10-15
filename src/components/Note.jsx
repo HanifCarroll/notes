@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import TextareaAutosize from "react-autosize-textarea";
 import { Popconfirm, message, Icon } from "antd";
+import Modal from "react-responsive-modal";
+
+import styles from "./Note.module.css";
 
 const StyledContainer = styled.div`
   box-sizing: border-box;
@@ -32,6 +35,7 @@ const DeleteButton = styled.button`
 const EditTitleInput = styled.input`
   margin-bottom: 15px;
   width: 100%;
+  border: none;
 `;
 
 const NoteContentContainer = styled.div`
@@ -54,7 +58,8 @@ const NoteTitle = styled.h3`
 const EditTextAreaStyle = {
   resize: "none",
   width: "100%",
-  fontSize: "16px"
+  fontSize: "16px",
+  border: "none"
 };
 
 const EditIconStyle = {
@@ -71,7 +76,8 @@ class Note extends React.Component {
     edit: false,
     title: "",
     content: "",
-    id: ""
+    id: "",
+    isModalVisible: false
   };
 
   componentDidMount = () => {
@@ -93,7 +99,9 @@ class Note extends React.Component {
 
   handleClickOutside = event => {
     if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-      if (this.state.edit) this.onEditSave();
+      if (this.state.edit) {
+        this.onEditSave();
+      }
     }
   };
 
@@ -102,7 +110,8 @@ class Note extends React.Component {
       edit: true,
       title: this.props.note.title,
       content: this.props.note.content,
-      id: this.props.note.id
+      id: this.props.note.id,
+      isModalVisible: true
     });
   };
 
@@ -113,7 +122,7 @@ class Note extends React.Component {
   onEditSave = () => {
     const { id, content, title } = this.state;
     this.props.onEditSave({ id, title, content });
-    this.setState({ edit: false });
+    this.setState({ edit: false, isModalVisible: false });
   };
 
   onDeleteClick = () => {
@@ -122,37 +131,12 @@ class Note extends React.Component {
   };
 
   renderNoteTitle = () => {
-    if (this.state.edit) {
-      return (
-        <EditTitleInput
-          type="text"
-          value={this.state.title}
-          onChange={e =>
-            this.setState(this.onInputChange("title", e.target.value))
-          }
-        />
-      );
-    }
     return (
       <NoteTitle onClick={this.onEditPress}>{this.props.note.title}</NoteTitle>
     );
   };
 
   renderNoteContent = () => {
-    if (this.state.edit) {
-      return (
-        <NoteContentContainer>
-          <TextareaAutosize
-            style={EditTextAreaStyle}
-            wrap="hard"
-            onChange={e =>
-              this.setState(this.onInputChange("content", e.target.value))
-            }
-            value={this.state.content}
-          />
-        </NoteContentContainer>
-      );
-    }
     return (
       <NoteContentContainer onClick={this.onEditPress}>
         <NoteContent>{this.props.note.content}</NoteContent>
@@ -195,20 +179,51 @@ class Note extends React.Component {
     );
   };
 
-  // Top level div is needed, because the click handler doesn't work with
-  // styled components.
+  renderModal = () => {
+    if (this.state.edit) {
+      return (
+        <Modal
+          open={this.state.isModalVisible}
+          onClose={this.onEditSave}
+          showCloseIcon={false}
+          classNames={{ modal: styles.modal, overlay: styles.overlay }}
+          animationDuration={300}
+        >
+          <div ref={this.setWrapperRef}>
+            <EditTitleInput
+              type="text"
+              value={this.state.title}
+              onChange={e =>
+                this.setState(this.onInputChange("title", e.target.value))
+              }
+              placeholder="Title"
+            />
+            <TextareaAutosize
+              style={EditTextAreaStyle}
+              wrap="hard"
+              onChange={e =>
+                this.setState(this.onInputChange("content", e.target.value))
+              }
+              value={this.state.content}
+              placeholder="Note"
+            />
+          </div>
+        </Modal>
+      );
+    }
+  };
+
   render() {
     return (
-      <div ref={this.setWrapperRef}>
-        <StyledContainer>
-          {this.renderNoteTitle()}
-          {this.renderNoteContent()}
-          <ButtonDiv>
-            {this.renderDeleteButton()}
-            {this.renderEditButton()}
-          </ButtonDiv>
-        </StyledContainer>
-      </div>
+      <StyledContainer>
+        {this.renderNoteTitle()}
+        {this.renderNoteContent()}
+        <ButtonDiv>
+          {this.renderDeleteButton()}
+          {this.renderEditButton()}
+        </ButtonDiv>
+        {this.renderModal()}
+      </StyledContainer>
     );
   }
 }

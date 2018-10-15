@@ -1,0 +1,30 @@
+.modal {
+  width: 100%;
+  top: -20%;
+}
+
+.overlay {
+  background-color: rgba(232, 232, 232, 0.8);
+}
+
+@media screen and (min-width: 500px) {
+  .modal {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .modal {
+    width: 60%;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .modal {
+    width: 40%;
+  }
+}
+
+.transition {
+  transition-duration: 10s;
+}

@@ -199,6 +199,8 @@ class App extends React.Component {
           notes={filteredNotes}
           onDeleteClick={this.onDeleteNote}
           onEditSave={this.onEditSave}
+          onShowModal={this.onShowModal}
+          onCloseModal={this.onCloseModal}
         />
       </div>
     );
