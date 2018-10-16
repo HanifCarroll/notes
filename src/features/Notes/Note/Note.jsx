@@ -1,7 +1,13 @@
 import React from "react";
-import TextareaAutosize from "react-autosize-textarea";
-import { Popconfirm, message, Icon } from "antd";
-import Modal from "react-responsive-modal";
+import { message } from "antd";
+
+import MyModal from "../../../components/MyModal";
+import NoteTitle from "../../../components/NoteTitle";
+import NoteContent from "../../../components/NoteContent";
+import NoteTitleInput from "../../../components/NoteTitleInput";
+import NoteContentInput from "../../../components/NoteContentInput";
+import DeleteButton from "../../../components/DeleteButton";
+import EditButton from "../../../components/EditButton";
 
 import styles from "./Note.module.scss";
 
@@ -64,94 +70,24 @@ class Note extends React.Component {
     message.success("Note deleted", 1.5);
   };
 
-  renderNoteTitle = () => {
-    return (
-      <h3 className={styles["note-title"]} onClick={this.onEditPress}>
-        {this.props.note.title}
-      </h3>
-    );
-  };
-
-  renderNoteContent = () => {
-    return (
-      <div
-        className={styles["note-content-container"]}
-        onClick={this.onEditPress}
-      >
-        <p className={styles["note-content"]}>{this.props.note.content}</p>
-      </div>
-    );
-  };
-
-  renderEditButton = () => {
-    if (this.state.edit) {
-      return (
-        <button className={styles.button} onClick={this.onEditSave}>
-          <Icon className={styles["edit-icon"]} type="check" theme="outlined" />
-        </button>
-      );
-    }
-    return (
-      <button className={styles.button} onClick={this.onEditPress}>
-        <Icon className={styles["edit-icon"]} type="edit" theme="outlined" />
-      </button>
-    );
-  };
-
-  renderDeleteButton = () => {
-    if (this.state.edit) {
-      return (
-        <button
-          className={styles.button}
-          onClick={() => this.setState({ edit: false })}
-        >
-          <Icon
-            type="close"
-            theme="outlined"
-            className={styles["delete-icon"]}
-          />
-        </button>
-      );
-    }
-    return (
-      <Popconfirm
-        title="Are you sure you want to delete this note?"
-        onConfirm={this.onDeleteClick}
-        okText="Yes"
-        cancelText="No"
-      >
-        <Icon
-          type="delete"
-          theme="outlined"
-          className={styles["delete-icon"]}
-        />
-      </Popconfirm>
-    );
-  };
-
   renderModal = () => {
     if (this.state.edit) {
       return (
-        <Modal
+        <MyModal
           open={this.state.isModalVisible}
           onClose={this.onEditSave}
-          showCloseIcon={false}
           classNames={{ modal: styles.modal, overlay: styles.overlay }}
-          animationDuration={300}
         >
           <div ref={this.setWrapperRef}>
-            <input
+            <NoteTitleInput
               className={styles["title-input"]}
-              type="text"
               value={this.state.title}
               onChange={e =>
                 this.setState(this.onInputChange("title", e.target.value))
               }
-              placeholder="Title"
             />
-            <TextareaAutosize
+            <NoteContentInput
               className={styles.textarea}
-              wrap="hard"
               onChange={e =>
                 this.setState(this.onInputChange("content", e.target.value))
               }
@@ -159,7 +95,7 @@ class Note extends React.Component {
               placeholder="Note"
             />
           </div>
-        </Modal>
+        </MyModal>
       );
     }
   };
@@ -167,11 +103,27 @@ class Note extends React.Component {
   render() {
     return (
       <div className={styles.container}>
-        {this.renderNoteTitle()}
-        {this.renderNoteContent()}
+        <NoteTitle
+          titleClassName={styles["note-title"]}
+          onClick={this.onEditPress}
+          title={this.props.note.title}
+        />
+        <NoteContent
+          containerClassName={styles["note-content-container"]}
+          contentClassName={styles["note-content"]}
+          onClick={this.onEditPress}
+          content={this.props.note.content}
+        />
         <div className={styles["button-container"]}>
-          {this.renderDeleteButton()}
-          {this.renderEditButton()}
+          <DeleteButton
+            onConfirm={this.onDeleteClick}
+            iconClassName={styles["delete-icon"]}
+          />
+          <EditButton
+            onClick={this.onDeleteClick}
+            buttonClassName={styles.button}
+            iconClassName={styles["edit-icon"]}
+          />
         </div>
         {this.renderModal()}
       </div>

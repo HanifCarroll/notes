@@ -1,5 +1,7 @@
 import React from "react";
-import TextareaAutosize from "react-autosize-textarea";
+
+import NoteTitleInput from "../../../components/NoteTitleInput";
+import NoteContentInput from "../../../components/NoteContentInput";
 
 import styles from "./NewNoteInput.module.scss";
 
@@ -36,25 +38,16 @@ class NewNoteInput extends React.Component {
     } = this.props;
 
     return (
-      <div style={{ textAlign: "center", marginTop: "30px" }}>
-        <div
-          ref={this.setWrapperRef}
-          style={{
-            justifyItems: "center",
-            display: "inline-flex",
-            margin: "0 auto"
-          }}
-        >
+      <div className={styles.container}>
+        <div ref={this.setWrapperRef} className={styles.wrapper}>
           <div>
-            <input
-              type="text"
+            <NoteTitleInput
               style={{ display: isNewNote ? "block" : "none" }}
               className={styles["title-input"]}
               value={title}
               onChange={e => onTitleChange(e)}
-              placeholder="Title"
             />
-            <TextareaAutosize
+            <NoteContentInput
               className={styles["content-input"]}
               value={content}
               onChange={e => onContentChange(e)}

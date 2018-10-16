@@ -2,13 +2,13 @@ import React from "react";
 import short from "short-uuid";
 import Fuse from "fuse.js";
 
-import Header from "./components/Header/Header";
-import NewNoteInput from "./components/NewNoteInput/NewNoteInput";
-import NotesList from "./components/NotesList/NotesList";
+import Header from "../../components/Header/Header";
+import NewNoteInput from "../NewNotes/NewNoteInput/NewNoteInput";
+import NotesList from "../Notes/NotesList/NotesList";
 
-import "./App.scss";
+import "./Home.scss";
 
-class App extends React.Component {
+class Home extends React.Component {
   state = {
     notes: [],
     filteredNotes: [],
@@ -209,4 +209,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Home;
