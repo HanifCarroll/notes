@@ -23,7 +23,10 @@ class NewNoteInput extends React.Component {
       if (!this.props.title.length && !this.props.content.length) {
         return this.props.onCancelNewNote();
       }
-      this.props.onNewSave();
+      this.props.onNewSave({
+        title: this.props.title,
+        content: this.props.content
+      });
     }
   };
 

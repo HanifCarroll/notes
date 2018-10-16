@@ -1,9 +1,6 @@
 import React from "react";
-import { compose } from "recompose";
 
-import withNotes from "../../data/withNotes";
-
-import Header from "../../components/Header/Header";
+import Header from "../Header/Header";
 import NewNoteInput from "../NewNotes/NewNoteInput/NewNoteInput";
 import NotesList from "../Notes/NotesList/NotesList";
 
@@ -17,7 +14,7 @@ function Home(props) {
       <Header
         search={search}
         onSearchChange={props.onSearchChange}
-        onEnterPress={props.onEnterPress}
+        onEnterPress={props.onSearch}
       />
       <NewNoteInput
         title={title}
@@ -40,4 +37,4 @@ function Home(props) {
   );
 }
 
-export default compose(withNotes)(Home);
+export default Home;

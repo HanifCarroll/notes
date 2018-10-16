@@ -1,6 +1,5 @@
 import React from "react";
 import short from "short-uuid";
-import Fuse from "fuse.js";
 
 function withNotes(WrappedComponent) {
   class WithNotes extends React.Component {
@@ -8,9 +7,6 @@ function withNotes(WrappedComponent) {
       super(props);
       this.state = {
         notes: [],
-        filteredNotes: [],
-        fuseFilter: null,
-        search: "",
         title: "",
         content: "",
         isNewNote: false
@@ -48,25 +44,9 @@ function withNotes(WrappedComponent) {
         filteredNotes: this.state.notes
       });
 
-    fuseFilter = notesArray => {
-      // Create a new Fuse object (search filter) with the corresponding options, then return
-      // the Fuse object to be used in searching.
-
-      const options = {
-        findAllMatches: false,
-        keys: ["title", "content"],
-        matchAllTokens: true,
-        tokenize: true
-      };
-
-      return new Fuse(notesArray, options);
-    };
-
     onTitleChange = e => this.setState({ title: e.target.value });
 
     onContentChange = e => this.setState({ content: e.target.value });
-
-    onSearchChange = e => this.setState({ search: e.target.value });
 
     onNewSave = () => {
       // Executed when a new note is entered from the 'new note input' up top.
@@ -149,49 +129,18 @@ function withNotes(WrappedComponent) {
       this.setState({ isNewNote: false });
     };
 
-    onSearchNotes = () => {
-      // Show view with filtered notes if there's a search term.
-      const { search, fuseFilter } = this.state;
-      if (search.length) {
-        return this.setState({
-          filteredNotes: fuseFilter.search(search)
-        });
-      }
-
-      // If there isn't a search term, then reset the filteredNotes to show all notes.
-      this.setState({ filteredNotes: this.state.notes });
-    };
-
-    onEnterPress = e => {
-      // Execute onSearchNotes on enter key press.
-      if (e.keyCode === 13) {
-        this.onSearchNotes();
-      }
-    };
-
     saveToLocalStorage = () => {
       localStorage.setItem("notes", JSON.stringify(this.state.notes));
     };
 
     render() {
-      const {
-        notes,
-        filteredNotes,
-        search,
-        title,
-        content,
-        isNewNote
-      } = this.state;
+      const { notes, title, content, isNewNote } = this.state;
       return (
         <WrappedComponent
           notes={notes}
-          filteredNotes={filteredNotes}
-          search={search}
           title={title}
           content={content}
           isNewNote={isNewNote}
-          onSearchChange={this.onSearchChange}
-          onEnterPress={this.onEnterPress}
           onTitleChange={this.onTitleChange}
           onContentChange={this.onContentChange}
           onNewNote={this.onNewNote}
