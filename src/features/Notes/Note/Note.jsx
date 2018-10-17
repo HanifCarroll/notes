@@ -1,13 +1,15 @@
 import React from "react";
 import { message } from "antd";
 
-import MyModal from "../../../components/MyModal";
-import NoteTitle from "../../../components/NoteTitle";
-import NoteContent from "../../../components/NoteContent";
-import NoteTitleInput from "../../../components/NoteTitleInput";
-import NoteContentInput from "../../../components/NoteContentInput";
-import DeleteButton from "../../../components/DeleteButton";
-import EditButton from "../../../components/EditButton";
+import {
+  Title,
+  Content,
+  Input,
+  TextArea,
+  DeleteButton,
+  EditButton,
+  Modal
+} from "elements";
 
 import styles from "./Note.module.scss";
 
@@ -73,20 +75,20 @@ class Note extends React.Component {
   renderModal = () => {
     if (this.state.edit) {
       return (
-        <MyModal
+        <Modal
           open={this.state.isModalVisible}
           onClose={this.onEditSave}
           classNames={{ modal: styles.modal, overlay: styles.overlay }}
         >
           <div ref={this.setWrapperRef}>
-            <NoteTitleInput
+            <Input
               className={styles["title-input"]}
               value={this.state.title}
               onChange={e =>
                 this.setState(this.onInputChange("title", e.target.value))
               }
             />
-            <NoteContentInput
+            <TextArea
               className={styles.textarea}
               onChange={e =>
                 this.setState(this.onInputChange("content", e.target.value))
@@ -95,7 +97,7 @@ class Note extends React.Component {
               placeholder="Note"
             />
           </div>
-        </MyModal>
+        </Modal>
       );
     }
   };
@@ -103,12 +105,12 @@ class Note extends React.Component {
   render() {
     return (
       <div className={styles.container}>
-        <NoteTitle
+        <Title
           titleClassName={styles["note-title"]}
           onClick={this.onEditPress}
           title={this.props.note.title}
         />
-        <NoteContent
+        <Content
           containerClassName={styles["note-content-container"]}
           contentClassName={styles["note-content"]}
           onClick={this.onEditPress}

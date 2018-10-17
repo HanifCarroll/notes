@@ -1,8 +1,8 @@
 import React from "react";
 
-import styles from "./Header.module.scss";
+import styles from "./styles.module.scss";
 
-const Header = props => {
+export const Header = props => {
   const { search, onSearchChange, onEnterPress } = props;
   return (
     <header className={styles.header}>
@@ -18,5 +18,3 @@ const Header = props => {
     </header>
   );
 };
-
-export default Header;

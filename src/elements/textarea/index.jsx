@@ -1,8 +1,6 @@
 import React from "react";
 import TextareaAutosize from "react-autosize-textarea";
 
-function NoteContentInput(props) {
+export const TextArea = props => {
   return <TextareaAutosize {...props} />;
-}
-
-export default NoteContentInput;
+};

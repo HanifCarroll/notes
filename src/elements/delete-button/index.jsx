@@ -1,7 +1,7 @@
 import React from "react";
 import { Popconfirm, Icon } from "antd";
 
-function DeleteIcon(props) {
+export const DeleteButton = props => {
   return (
     <Popconfirm
       title="Are you sure you want to delete this note?"
@@ -12,6 +12,4 @@ function DeleteIcon(props) {
       <Icon type="delete" theme="outlined" className={props.iconClassName} />
     </Popconfirm>
   );
-}
-
-export default DeleteIcon;
+};

@@ -3,11 +3,11 @@ import { compose } from "recompose";
 
 import withNotes from "../../data/withNotes";
 
-import Header from "../Header/Header";
+import { Header } from "elements";
 import NewNoteInput from "../NewNotes/NewNoteInput/NewNoteInput";
 import NotesList from "../Notes/NotesList/NotesList";
 
-import "./Home.scss";
+import "./styles.scss";
 
 function Home(props) {
   const { filteredNotes, isNewNote, title, content, search } = props;

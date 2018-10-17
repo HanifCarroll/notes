@@ -1,7 +1,6 @@
 import React from "react";
 
-import NoteTitleInput from "../../../components/NoteTitleInput";
-import NoteContentInput from "../../../components/NoteContentInput";
+import { Input, TextArea } from "elements";
 
 import styles from "./NewNoteInput.module.scss";
 
@@ -41,13 +40,13 @@ class NewNoteInput extends React.Component {
       <div className={styles.container}>
         <div ref={this.setWrapperRef} className={styles.wrapper}>
           <div>
-            <NoteTitleInput
+            <Input
               style={{ display: isNewNote ? "block" : "none" }}
               className={styles["title-input"]}
               value={title}
               onChange={e => onTitleChange(e)}
             />
-            <NoteContentInput
+            <TextArea
               className={styles["content-input"]}
               value={content}
               onChange={e => onContentChange(e)}

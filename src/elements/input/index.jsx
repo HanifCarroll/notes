@@ -1,7 +1,5 @@
 import React from "react";
 
-function NoteTitleInput(props) {
+export const Input = props => {
   return <input type="text" placeholder="Title" {...props} />;
-}
-
-export default NoteTitleInput;
+};
