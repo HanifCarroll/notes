@@ -47,12 +47,11 @@ export class Editable extends React.Component {
   };
 
   render() {
-    const { id, title, content } = this.state;
+    const { title, content } = this.state;
 
     return (
       <div ref={node => (this.wrapperRef = node)}>
         <Input
-          style={{ display: id ? "block" : "none" }}
           className={styles["title-input"]}
           placeholder="Title"
           value={title}
