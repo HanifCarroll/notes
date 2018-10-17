@@ -120,7 +120,7 @@ class Note extends React.Component {
             iconClassName={styles["delete-icon"]}
           />
           <EditButton
-            onClick={this.onDeleteClick}
+            onClick={this.onEditPress}
             buttonClassName={styles.button}
             iconClassName={styles["edit-icon"]}
           />

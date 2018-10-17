@@ -133,7 +133,7 @@ function withNotes(WrappedComponent) {
         },
         () => {
           // Alert fuse filter of updated notes array.
-          this.setState({ fuseFilter: this.fuseFilter() }, () =>
+          this.setState({ fuseFilter: this.fuseFilter(this.state.notes) }, () =>
             this.saveToLocalStorage()
           );
         }
@@ -149,12 +149,11 @@ function withNotes(WrappedComponent) {
       this.setState({ isNewNote: false });
     };
 
-    onSearchNotes = () => {
+    onSearchNotes = query => {
       // Show view with filtered notes if there's a search term.
-      const { search, fuseFilter } = this.state;
-      if (search.length) {
+      if (this.state.search.length) {
         return this.setState({
-          filteredNotes: fuseFilter.search(search)
+          filteredNotes: this.state.fuseFilter.search(query)
         });
       }
 
@@ -165,7 +164,7 @@ function withNotes(WrappedComponent) {
     onEnterPress = e => {
       // Execute onSearchNotes on enter key press.
       if (e.keyCode === 13) {
-        this.onSearchNotes();
+        this.onSearchNotes(this.state.search);
       }
     };
 
@@ -198,6 +197,7 @@ function withNotes(WrappedComponent) {
           onNewSave={this.onNewSave}
           onEditSave={this.onEditSave}
           onCancelNewNote={this.onCancelNewNote}
+          onDeleteNote={this.onDeleteNote}
           {...this.props}
         />
       );
