@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Header } from "elements";
-import { Notes, Editable } from "modules/notes";
+import { Notes, Editable, NewNoteInput } from "modules/notes";
 import * as actions from "modules/notes";
 import { getNote } from "./helpers";
 import styles from "./styles.module.scss";
@@ -42,19 +42,11 @@ export class NotesContainer extends React.Component {
     // From Search component
     const { query, onSearch } = this.props;
 
-    return (
-      <Header search={query} onSearch={onSearch}>
-        {this.renderNew()}
-      </Header>
-    );
+    return <Header search={query} onSearch={onSearch} />;
   };
 
-  renderNew = () => {
-    return (
-      <button className={"new-note"} onClick={this.onEdit.bind(this, "new")}>
-        NEW
-      </button>
-    );
+  renderNewNote = () => {
+    return <NewNoteInput onSave={this.onSave} />;
   };
 
   renderNotes = () => {
@@ -91,6 +83,7 @@ export class NotesContainer extends React.Component {
     return (
       <div className="App">
         {this.renderHeader()}
+        {this.renderNewNote()}
         {this.renderNotes()}
         {this.renderModal()}
       </div>
