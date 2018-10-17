@@ -68,8 +68,8 @@ export class NewNoteInput extends React.Component {
               onChange={this.onChange("title")}
             />
             <TextArea
-              style={{ borderRadius: isNewNote ? null : "4px 4px 0 0" }}
               className={styles["content-input"]}
+              style={{ borderRadius: isNewNote ? null : "4px" }}
               value={content}
               onChange={this.onChange("content")}
               onClick={this.handleTextAreaClick}
