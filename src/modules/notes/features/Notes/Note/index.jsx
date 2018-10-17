@@ -13,7 +13,7 @@ import {
 
 import styles from "./Note.module.scss";
 
-class Note extends React.Component {
+export class Note extends React.Component {
   state = {
     edit: false,
     title: "",
@@ -132,5 +132,3 @@ class Note extends React.Component {
     );
   }
 }
-
-export default Note;

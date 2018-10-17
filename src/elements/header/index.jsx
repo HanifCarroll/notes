@@ -1,9 +1,8 @@
 import React from "react";
-
 import styles from "./styles.module.scss";
 
 export const Header = props => {
-  const { search, onSearchChange, onEnterPress } = props;
+  const { search, onSearch, children } = props;
   return (
     <header className={styles.header}>
       <h1 className={styles.logo}>Notes</h1>
@@ -12,9 +11,9 @@ export const Header = props => {
         type="search"
         placeholder="Search notes..."
         value={search}
-        onChange={e => onSearchChange(e)}
-        onKeyDown={e => onEnterPress(e)}
+        onChange={onSearch}
       />
+      {children}
     </header>
   );
 };

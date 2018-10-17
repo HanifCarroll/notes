@@ -8,7 +8,7 @@ export class DataLinker extends React.Component {
     const { storeKey } = this.props;
 
     return loadFromLocalStorage(storeKey)
-      .then(data => this.setState({ data }))
+      .then(data => (data ? this.setState({ data }) : null))
       .catch(e => console.log(e));
   }
 
@@ -26,7 +26,7 @@ export class DataLinker extends React.Component {
     const { data } = this.state;
     const { children: render } = this.props;
 
-    // Children is the function pulls of data and syncStore and renders the Search component.
+    // Children is a function that pulls of data & syncStore and renders the Search component.
     // Search component receives data (notes) as props.
     // syncStore is passed to the component that Search renders as props, NotesContainer.
     return render({ data, syncStore: this.syncStore });

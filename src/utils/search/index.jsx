@@ -6,7 +6,7 @@ export class Search extends React.Component {
 
   static getDerivedStateFromProps(props) {
     // Search is rendered as a child of DataLinker and receives prop 'data', the notes array.
-    const { data } = this.props;
+    const { data } = props;
 
     // Queryable is a Fuse filter containing the notes array.  It is remade when new data
     // comes in as a prop.

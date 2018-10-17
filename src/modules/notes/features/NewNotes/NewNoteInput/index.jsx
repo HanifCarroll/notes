@@ -4,7 +4,7 @@ import { Input, TextArea } from "elements";
 
 import styles from "./NewNoteInput.module.scss";
 
-class NewNoteInput extends React.Component {
+export class NewNoteInput extends React.Component {
   componentDidMount = () => {
     document.addEventListener("mousedown", this.handleClickOutside);
   };
@@ -59,5 +59,3 @@ class NewNoteInput extends React.Component {
     );
   }
 }
-
-export default NewNoteInput;

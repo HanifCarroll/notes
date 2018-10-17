@@ -1,7 +1,7 @@
 import React from "react";
 import Masonry from "react-masonry-css";
 
-import Note from "../Note/Note";
+import { Note } from "modules/features/Notes";
 
 import styles from "./NotesList.module.scss";
 
@@ -12,7 +12,7 @@ const breakpointColumnsObj = {
   600: 1
 };
 
-const NotesList = props => {
+export const NotesList = props => {
   const renderNotesList = () =>
     props.notes.map(note => (
       <Note
@@ -31,5 +31,3 @@ const NotesList = props => {
     </div>
   );
 };
-
-export default NotesList;
