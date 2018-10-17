@@ -1,6 +1,7 @@
 .container {
   text-align: center;
-  margin-top: 30px;
+
+  border: 2px solid black;
 }
 
 .wrapper {
@@ -12,34 +13,17 @@
 .content-input {
   display: block;
   margin: 0 auto;
-  width: 80vw;
+  width: 100%;
   font-size: 16px;
   padding: 10px;
   border: none;
   resize: none;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-
-  @media (min-width: 750px) {
-    width: 60vw;
-  }
-
-  @media (min-width: 1000px) {
-    width: 40vw;
-  }
 }
 
 .title-input {
-  width: 80vw;
+  width: 100%;
   margin: 0 auto;
   font-size: 18px;
   padding: 10px;
   border: none;
-
-  @media (min-width: 750px) {
-    width: 60vw;
-  }
-
-  @media (min-width: 1000px) {
-    width: 40vw;
-  }
 }
