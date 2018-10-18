@@ -1,9 +1,18 @@
 import React from "react";
 
-export const Content = props => {
-  return (
-    <div className={props.containerClassName} onClick={props.onClick}>
-      <p className={props.contentClassName}>{props.content}</p>
-    </div>
-  );
-};
+export class Content extends React.Component {
+  render() {
+    const {
+      containerClassName,
+      contentClassName,
+      content,
+      onClick
+    } = this.props;
+
+    return (
+      <div className={containerClassName} onClick={onClick}>
+        <p className={contentClassName}>{content}</p>
+      </div>
+    );
+  }
+}

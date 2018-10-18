@@ -25,7 +25,7 @@ export class Notes extends React.Component {
               title={title}
               content={content}
               onDelete={onDelete.bind(this, id)}
-              onEdit={onEdit.bind(this, id)}
+              onEdit={onEdit}
             />
           );
         })}
@@ -38,7 +38,11 @@ export class Notes extends React.Component {
     const { notes } = this.props;
 
     const data =
-      notes && notes.length ? this.renderNotes() : <p>{"No notes exist."}</p>;
+      notes && notes.length ? (
+        this.renderNotes()
+      ) : (
+        <p className={styles["no-notes"]}>No notes!</p>
+      );
 
     return <div className={styles.container}>{data}</div>;
   }

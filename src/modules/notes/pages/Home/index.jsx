@@ -6,10 +6,34 @@ import { getNote } from "./helpers";
 import styles from "./styles.module.scss";
 
 export class NotesContainer extends React.Component {
-  state = { noteId: null };
+  constructor(props) {
+    super(props);
+    this.editable = React.createRef();
 
-  onEdit = noteId => {
-    this.setState({ noteId });
+    this.state = { noteId: null };
+  }
+
+  onEdit = (noteId, initialClick) => {
+    this.setState({ noteId }, () => this.selectFocus(initialClick));
+  };
+
+  selectFocus = initialClick => {
+    if (initialClick === "title") {
+      const { input } = this.editable.current.titleInput.current;
+      input.current.focus();
+    }
+
+    if (initialClick === "content") {
+      const {
+        textarea
+      } = this.editable.current.contentInput.current.textarea.current;
+
+      textarea.focus();
+
+      // Place cursor at the end.
+      const length = textarea.textLength;
+      textarea.setSelectionRange(length, length);
+    }
   };
 
   onSave = note => {
@@ -35,7 +59,7 @@ export class NotesContainer extends React.Component {
 
   onClose = () => {
     // No noteId, so the modal disappears.
-    this.setState({ noteId: null });
+    this.setState({ noteId: null, initialClick: "" });
   };
 
   renderHeader = () => {
@@ -70,6 +94,7 @@ export class NotesContainer extends React.Component {
         classNames={{ modal: styles.modal, overlay: styles.overlay }}
       >
         <Editable
+          ref={this.editable}
           id={id}
           title={title}
           content={content}

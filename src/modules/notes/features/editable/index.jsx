@@ -5,6 +5,12 @@ import { Input, TextArea } from "elements";
 import styles from "./styles.module.scss";
 
 export class Editable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.titleInput = React.createRef();
+    this.contentInput = React.createRef();
+  }
+
   state = {
     id: "",
     title: "Title",
@@ -52,12 +58,14 @@ export class Editable extends React.Component {
     return (
       <div ref={node => (this.wrapperRef = node)}>
         <Input
+          ref={this.titleInput}
           className={styles["title-input"]}
           placeholder="Title"
           value={title}
           onChange={this.onChange("title")}
         />
         <TextArea
+          ref={this.contentInput}
           className={styles["content-input"]}
           placeholder="Note"
           value={content}

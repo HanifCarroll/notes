@@ -1,5 +1,14 @@
 import React from "react";
 
-export const Input = props => {
-  return <input type="text" placeholder="Title" {...props} />;
-};
+export class Input extends React.Component {
+  constructor(props) {
+    super(props);
+    this.input = React.createRef();
+  }
+
+  render() {
+    return (
+      <input type="text" placeholder="Title" ref={this.input} {...this.props} />
+    );
+  }
+}

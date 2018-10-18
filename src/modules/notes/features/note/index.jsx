@@ -5,11 +5,17 @@ import styles from "./styles.module.scss";
 import { Title, Content, DeleteButton, EditButton } from "elements";
 
 export class Note extends React.Component {
-  onEdit = () => {
+  constructor(props) {
+    super(props);
+    // create a ref to store the textInput DOM element
+    this.contentInput = React.createRef();
+  }
+
+  onEdit = initialClick => {
     const { id, onEdit } = this.props;
 
     // Passed from NotesContainer.  Populates editable view with the details of the note.
-    onEdit(id);
+    onEdit(id, initialClick);
   };
 
   onDelete = () => {
@@ -31,13 +37,13 @@ export class Note extends React.Component {
         <Title
           titleClassName={styles["note-title"]}
           title={title}
-          onClick={this.onEdit}
+          onClick={() => this.onEdit("title")}
         />
         <Content
           containerClassName={styles["note-content-container"]}
           contentClassName={styles["note-content"]}
           content={content}
-          onClick={this.onEdit}
+          onClick={() => this.onEdit("content")}
         />
       </>
     );
