@@ -3,7 +3,7 @@ import short from "short-uuid";
 export const onCreate = (notes, note) => {
   const { title, content } = note;
 
-  if (!title || !content) return;
+  if (!title.length && !content.length) return;
 
   return [...notes, { title, content, id: short.uuid() }];
 };
