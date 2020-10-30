@@ -6,7 +6,7 @@
     "antd": "^3.10.1",
     "babel-plugin-import": "^1.9.1",
     "fuse.js": "^3.2.1",
-    "node-sass": "^4.9.4",
+    "node-sass": "^4.14.1",
     "react": "^16.5.2",
     "react-app-rewired": "^1.6.2",
     "react-autosize-textarea": "^5.0.0",
