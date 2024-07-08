@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Header } from "../../../../elements";
-import { Notes, Editable, NewNoteInput } from "../../../../modules/notes";
+import { Notes, Editable, NewNoteInput } from "../../features";
 import * as actions from "../../../../modules/notes";
 import { getNote } from "./helpers";
 import styles from "./styles.module.scss";
