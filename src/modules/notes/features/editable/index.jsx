@@ -1,7 +1,7 @@
 // This component is rendered by NotesContainer, so props are passed from there.
 
 import React from "react";
-import { Input, TextArea } from "elements";
+import { Input, TextArea } from "../../../../elements";
 import styles from "./styles.module.scss";
 
 export class Editable extends React.Component {

@@ -2,7 +2,7 @@ import React from "react";
 import { message } from "antd";
 import styles from "./styles.module.scss";
 
-import { Title, Content, DeleteButton, EditButton } from "elements";
+import { Title, Content, DeleteButton, EditButton } from "../../../../elements";
 
 export class Note extends React.Component {
   constructor(props) {

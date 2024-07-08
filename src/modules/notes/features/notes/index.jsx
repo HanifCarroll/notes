@@ -1,7 +1,7 @@
 import React from "react";
 import Masonry from "react-masonry-css";
 import styles from "./styles.module.scss";
-import { Note } from "modules/notes";
+import { Note } from "../../../../modules/notes";
 
 const breakpointColumns = {
   default: 4,

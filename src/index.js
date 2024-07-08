@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { NotesModule } from "modules/notes";
+import { NotesModule } from "./modules/notes";
 import * as serviceWorker from "./serviceWorker";
 import "./index.scss";
 ReactDOM.render(<NotesModule />, document.getElementById("root"));

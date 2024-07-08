@@ -1,6 +1,6 @@
 import React from "react";
-import { DataLinker } from "data/linker";
-import { Search } from "utils/search";
+import { DataLinker } from "../../../data/linker";
+import { Search } from "../../../utils/search";
 import { NotesContainer } from "../pages";
 
 export class NotesModule extends React.Component {

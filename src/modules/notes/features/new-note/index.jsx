@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Input, TextArea } from "elements";
+import { Input, TextArea } from "../../../../elements";
 
 import styles from "./NewNoteInput.module.scss";
 
